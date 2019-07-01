@@ -14,7 +14,7 @@
 		122483B722C6A9F900B402FA /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122483B422C6A9F900B402FA /* Note.swift */; };
 		122483B822C6A9F900B402FA /* FileNotebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122483B522C6A9F900B402FA /* FileNotebook.swift */; };
 		122483B922C6A9F900B402FA /* NoteExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122483B622C6A9F900B402FA /* NoteExtensions.swift */; };
-		12E3ACF122CA34DB006A4921 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12E3ACF022CA34DB006A4921 /* LaunchScreen.storyboard */; };
+		12E3ACF622CA36CD006A4921 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12E3ACF522CA36CD006A4921 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 		122483B422C6A9F900B402FA /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		122483B522C6A9F900B402FA /* FileNotebook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileNotebook.swift; sourceTree = "<group>"; };
 		122483B622C6A9F900B402FA /* NoteExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteExtensions.swift; sourceTree = "<group>"; };
-		12E3ACF022CA34DB006A4921 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		12E3ACF522CA36CD006A4921 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +64,7 @@
 				1224839022C6888900B402FA /* AppDelegate.swift */,
 				1224839222C6888900B402FA /* ViewController.swift */,
 				1224839422C6888900B402FA /* Main.storyboard */,
-				12E3ACF022CA34DB006A4921 /* LaunchScreen.storyboard */,
+				12E3ACF522CA36CD006A4921 /* LaunchScreen.storyboard */,
 				1224839722C6888B00B402FA /* Assets.xcassets */,
 				1224839C22C6888B00B402FA /* Info.plist */,
 			);
@@ -139,7 +139,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12E3ACF122CA34DB006A4921 /* LaunchScreen.storyboard in Resources */,
+				12E3ACF622CA36CD006A4921 /* LaunchScreen.storyboard in Resources */,
 				1224839822C6888B00B402FA /* Assets.xcassets in Resources */,
 				1224839622C6888900B402FA /* Main.storyboard in Resources */,
 			);
@@ -232,6 +232,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -286,6 +287,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
