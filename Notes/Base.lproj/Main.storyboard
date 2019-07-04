@@ -220,7 +220,7 @@
         <!--View Controller-->
         <scene sceneID="rnf-RV-fnt">
             <objects>
-                <viewController id="Vec-u0-h34" sceneMemberID="viewController">
+                <viewController id="Vec-u0-h34" customClass="ViewController" customModule="Notes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xVH-n2-uaT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -239,17 +239,17 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ITm-Ey-6J5">
-                                        <rect key="frame" x="8" y="46" width="304" height="182"/>
+                                        <rect key="frame" x="8" y="46" width="304" height="20"/>
                                         <color key="backgroundColor" red="0.44929796329999999" green="1" blue="0.91822034409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="182" id="JGH-do-mtU"/>
+                                            <constraint firstAttribute="height" constant="20" id="JGH-do-mtU"/>
                                         </constraints>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                                     </textView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Destroy Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYF-jo-d0m">
-                                        <rect key="frame" x="8" y="241" width="139" height="20"/>
+                                        <rect key="frame" x="8" y="79" width="139" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="ZgT-Bu-QHJ"/>
                                         </constraints>
@@ -257,48 +257,93 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="THs-EC-AHx">
-                                        <rect key="frame" x="8" y="275" width="65" height="65"/>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eLe-iU-dfq">
+                                        <rect key="frame" x="163" y="74" width="51" height="31"/>
+                                    </switch>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="THs-EC-AHx" customClass="BoxFlag" customModule="Notes" customModuleProvider="target">
+                                        <rect key="frame" x="18" y="113" width="65" height="65"/>
                                         <color key="backgroundColor" red="0.0" green="1" blue="0.92761266750000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="65" id="gls-0h-XVV"/>
                                             <constraint firstAttribute="height" constant="65" id="mZx-4H-37f"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="size" keyPath="shapeSize">
+                                                <size key="value" width="20" height="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                <real key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shapePosition">
+                                                <point key="value" x="5" y="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="ful-qt-rMx" appends="YES" id="gYg-pT-JJI"/>
+                                        </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqa-s9-CEY">
-                                        <rect key="frame" x="82" y="275" width="65" height="65"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqa-s9-CEY" customClass="BoxFlag" customModule="Notes" customModuleProvider="target">
+                                        <rect key="frame" x="92" y="113" width="65" height="65"/>
                                         <color key="backgroundColor" red="1" green="0.0" blue="0.03624573524" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="65" id="24v-gV-HeT"/>
                                             <constraint firstAttribute="width" constant="65" id="R83-4M-hsc"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shapePosition">
+                                                <point key="value" x="5" y="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                <real key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="size" keyPath="shapeSize">
+                                                <size key="value" width="20" height="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="zL4-73-vCu" appends="YES" id="mfF-Xa-vPi"/>
+                                        </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9iR-0E-IfC">
-                                        <rect key="frame" x="155" y="275" width="65" height="65"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9iR-0E-IfC" customClass="BoxFlag" customModule="Notes" customModuleProvider="target">
+                                        <rect key="frame" x="165" y="113" width="65" height="65"/>
                                         <color key="backgroundColor" red="0.2079071938" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="65" id="dgN-vd-AxA"/>
                                             <constraint firstAttribute="width" constant="65" id="qNr-Ys-Rab"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shapePosition">
+                                                <point key="value" x="5" y="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                <real key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="size" keyPath="shapeSize">
+                                                <size key="value" width="20" height="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="Iaw-xA-gAz" appends="YES" id="dbJ-Mq-292"/>
+                                        </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nRK-k0-iPv">
-                                        <rect key="frame" x="228" y="275" width="65" height="65"/>
+                                        <rect key="frame" x="238" y="113" width="65" height="65"/>
                                         <color key="backgroundColor" red="0.0" green="0.061501125429999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="65" id="fJw-02-bV1"/>
                                             <constraint firstAttribute="width" constant="65" id="owx-LP-9Y8"/>
                                         </constraints>
                                     </view>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eLe-iU-dfq">
-                                        <rect key="frame" x="163" y="236" width="51" height="31"/>
-                                    </switch>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="qYF-jo-d0m" firstAttribute="leading" secondItem="0k7-5L-QG2" secondAttribute="leading" constant="8" id="2K0-9O-BbM"/>
                                     <constraint firstItem="SIb-oL-g0O" firstAttribute="top" secondItem="0k7-5L-QG2" secondAttribute="top" constant="8" id="4PL-9r-wwH"/>
                                     <constraint firstItem="wqa-s9-CEY" firstAttribute="leading" secondItem="THs-EC-AHx" secondAttribute="trailing" constant="9" id="Gjz-3R-wpo"/>
                                     <constraint firstItem="eLe-iU-dfq" firstAttribute="leading" secondItem="qYF-jo-d0m" secondAttribute="trailing" constant="16" id="Ian-wf-HFG"/>
-                                    <constraint firstAttribute="bottom" secondItem="THs-EC-AHx" secondAttribute="bottom" constant="408" id="JHY-dK-COY"/>
+                                    <constraint firstAttribute="bottom" secondItem="THs-EC-AHx" secondAttribute="bottom" constant="350" id="JHY-dK-COY"/>
                                     <constraint firstItem="ITm-Ey-6J5" firstAttribute="top" secondItem="SIb-oL-g0O" secondAttribute="bottom" constant="8" symbolic="YES" id="NQS-fJ-xrN"/>
                                     <constraint firstItem="ITm-Ey-6J5" firstAttribute="centerX" secondItem="0k7-5L-QG2" secondAttribute="centerX" id="PyJ-Ri-ggg"/>
                                     <constraint firstItem="THs-EC-AHx" firstAttribute="top" secondItem="qYF-jo-d0m" secondAttribute="bottom" constant="14" id="QtS-6W-CWh"/>
@@ -312,7 +357,7 @@
                                     <constraint firstItem="9iR-0E-IfC" firstAttribute="top" secondItem="eLe-iU-dfq" secondAttribute="bottom" constant="8" id="gU2-Eo-uMq"/>
                                     <constraint firstItem="wqa-s9-CEY" firstAttribute="top" secondItem="eLe-iU-dfq" secondAttribute="bottom" constant="8" id="hqg-m0-qhM"/>
                                     <constraint firstItem="SIb-oL-g0O" firstAttribute="leading" secondItem="0k7-5L-QG2" secondAttribute="leading" constant="8" id="kA8-iG-w80"/>
-                                    <constraint firstItem="THs-EC-AHx" firstAttribute="leading" secondItem="0k7-5L-QG2" secondAttribute="leading" constant="8" id="nrg-Yh-LLs"/>
+                                    <constraint firstItem="THs-EC-AHx" firstAttribute="leading" secondItem="0k7-5L-QG2" secondAttribute="leading" constant="18" id="nrg-Yh-LLs"/>
                                     <constraint firstItem="nRK-k0-iPv" firstAttribute="top" secondItem="eLe-iU-dfq" secondAttribute="bottom" constant="8" id="yFI-eJ-zVJ"/>
                                 </constraints>
                             </scrollView>
@@ -326,8 +371,30 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qlB-9B-tt7"/>
                     </view>
+                    <connections>
+                        <outlet property="coloredBox" destination="nRK-k0-iPv" id="TeE-1S-l7I"/>
+                        <outlet property="greenBox" destination="9iR-0E-IfC" id="sky-fe-PX7"/>
+                        <outlet property="redBox" destination="wqa-s9-CEY" id="DK1-sg-Il9"/>
+                        <outlet property="textView" destination="ITm-Ey-6J5" id="MUA-D7-e3G"/>
+                        <outlet property="whiteBox" destination="THs-EC-AHx" id="kjT-qU-2IB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MCy-r3-ojP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ful-qt-rMx">
+                    <connections>
+                        <action selector="actionWhiteBoxTapped:" destination="Vec-u0-h34" id="Kcq-pq-7Kz"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="zL4-73-vCu">
+                    <connections>
+                        <action selector="actionRedBoxTapped:" destination="Vec-u0-h34" id="R5t-qu-zrz"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="Iaw-xA-gAz">
+                    <connections>
+                        <action selector="actionGreenBoxTapped:" destination="Vec-u0-h34" id="U8S-ch-6Gc"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1341" y="125"/>
         </scene>
