@@ -8,14 +8,28 @@ class ViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var redBox: BoxFlag!
     @IBOutlet weak var greenBox: BoxFlag!
     @IBOutlet weak var coloredBox: BoxFlag!
+    @IBOutlet weak var dateSwitcher: UISwitch!
+    @IBOutlet weak var datePicker: UIDatePicker!
     
     var boxChar: Character = " "
+    var destroyDate: Date?
+    
+    @IBAction func actionDateSwitcher(_ sender: UISwitch) {
+        datePicker.isHidden = !datePicker.isHidden
+        if datePicker.isHidden {
+            destroyDate = nil
+        }
+    }
+    
+    @IBAction func actionDatePicker(_ sender: UIDatePicker) {
+        destroyDate = sender.date
+    }
     
     @IBAction func actionWhiteBoxTapped(_ sender: Any) {
         whiteBox.isShapeHiden = !whiteBox.isShapeHiden
-        if whiteBox.isShapeHiden {
-            redBox.isShapeHiden = false
-            greenBox.isShapeHiden = false
+        if !whiteBox.isShapeHiden {
+            redBox.isShapeHiden = true
+            greenBox.isShapeHiden = true
             boxChar = "W"
         } else {
             boxChar = " "
@@ -24,9 +38,9 @@ class ViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func actionRedBoxTapped(_ sender: Any) {
         redBox.isShapeHiden = !redBox.isShapeHiden
-        if redBox.isShapeHiden {
-            whiteBox.isShapeHiden = false
-            greenBox.isShapeHiden = false
+        if !redBox.isShapeHiden {
+            whiteBox.isShapeHiden = true
+            greenBox.isShapeHiden = true
             boxChar = "R"
         } else {
             boxChar = " "
@@ -35,9 +49,9 @@ class ViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func actionGreenBoxTapped(_ sender: Any) {
         greenBox.isShapeHiden = !greenBox.isShapeHiden
-        if greenBox.isShapeHiden {
-            redBox.isShapeHiden = false
-            whiteBox.isShapeHiden = false
+        if !greenBox.isShapeHiden {
+            redBox.isShapeHiden = true
+            whiteBox.isShapeHiden = true
             boxChar = "G"
         } else {
             boxChar = " "

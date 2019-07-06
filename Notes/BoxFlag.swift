@@ -1,10 +1,3 @@
-//
-//  BoxFlag.swift
-//  Notes
-//
-//  Created by Tianid on 04/07/2019.
-//  Copyright © 2019 tianid. All rights reserved.
-//
 
 import UIKit
 
@@ -30,7 +23,7 @@ class BoxFlag: UIView {
             setNeedsDisplay()
         }
     }
-    @IBInspectable var isShapeHiden: Bool = false {
+    @IBInspectable var isShapeHiden: Bool = true {
         didSet {
             setNeedsDisplay()
         }
@@ -38,11 +31,9 @@ class BoxFlag: UIView {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        guard isShapeHiden else {
-            return
-        }
-        shapeColor.setFill()
         
+        guard !isShapeHiden else { return }
+        shapeColor.setFill()
         setFlagPosition()
         let pathX = getX(in: CGRect(origin: shapePosition, size: shapeSize))
         
