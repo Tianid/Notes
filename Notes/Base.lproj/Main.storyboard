@@ -202,7 +202,7 @@
                         <viewLayoutGuide key="safeArea" id="qlB-9B-tt7"/>
                     </view>
                     <connections>
-                        <outlet property="colouredBox" destination="nRK-k0-iPv" id="TeE-1S-l7I"/>
+                        <outlet property="coloredBox" destination="nRK-k0-iPv" id="Xqt-nx-9lF"/>
                         <outlet property="datePicker" destination="8yx-ud-Dhq" id="mhr-0f-1nC"/>
                         <outlet property="dateSwitcher" destination="eLe-iU-dfq" id="6b7-NZ-W0G"/>
                         <outlet property="greenBox" destination="9iR-0E-IfC" id="sky-fe-PX7"/>
