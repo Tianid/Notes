@@ -11,8 +11,10 @@ class ViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var dateSwitcher: UISwitch!
     @IBOutlet weak var datePicker: UIDatePicker!
     
-    var boxChar: Character = " "
+    var colorForColoderBox: UIColor? = nil
+    var boxChar: Character?
     var destroyDate: Date?
+    
     
     @IBAction func actionDateSwitcher(_ sender: UISwitch) {
         datePicker.isHidden = !datePicker.isHidden
@@ -25,14 +27,14 @@ class ViewController: UIViewController, UITextViewDelegate {
         destroyDate = sender.date
     }
     
+    
     @IBAction func actionWhiteBoxTapped(_ sender: Any) {
         whiteBox.isShapeHiden = !whiteBox.isShapeHiden
         if !whiteBox.isShapeHiden {
             redBox.isShapeHiden = true
             greenBox.isShapeHiden = true
-            boxChar = "W"
-        } else {
-            boxChar = " "
+            coloredBox.isShapeHiden = true
+            coloredBox.isRainbowBackground = true
         }
     }
     
@@ -41,9 +43,8 @@ class ViewController: UIViewController, UITextViewDelegate {
         if !redBox.isShapeHiden {
             whiteBox.isShapeHiden = true
             greenBox.isShapeHiden = true
-            boxChar = "R"
-        } else {
-            boxChar = " "
+            coloredBox.isShapeHiden = true
+            coloredBox.isRainbowBackground = true
         }
     }
     
@@ -52,15 +53,27 @@ class ViewController: UIViewController, UITextViewDelegate {
         if !greenBox.isShapeHiden {
             redBox.isShapeHiden = true
             whiteBox.isShapeHiden = true
-            boxChar = "G"
-        } else {
-            boxChar = " "
+            coloredBox.isShapeHiden = true
+            coloredBox.isRainbowBackground = true
         }
+    }
+    
+    @IBAction func longTapToCallPalette(_ sender: UILongPressGestureRecognizer) {
+        
+        if sender.state == .began {
+            coloredBox.isShapeHiden = !coloredBox.isShapeHiden
+            if !coloredBox.isShapeHiden {
+                redBox.isShapeHiden = true
+                whiteBox.isShapeHiden = true
+                greenBox.isShapeHiden = true
+            }
+            performSegue(withIdentifier: "toColorPicker", sender: self)
+        }
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         whiteBox.backgroundColor = UIColor.white
         whiteBox.layer.borderWidth = 1
@@ -74,7 +87,14 @@ class ViewController: UIViewController, UITextViewDelegate {
         greenBox.layer.borderWidth = 1
         greenBox.layer.borderColor = UIColor.gray.cgColor
         
-        coloredBox.backgroundColor = UIColor.orange
+        if colorForColoderBox == nil {
+            coloredBox.isRainbowBackground = true
+        } else {
+            coloredBox.backgroundColor = colorForColoderBox
+            coloredBox.isRainbowBackground = false
+            colorForColoderBox = nil
+            coloredBox.isShapeHiden = false
+        }
         coloredBox.layer.borderWidth = 1
         coloredBox.layer.borderColor = UIColor.gray.cgColor
         
@@ -98,10 +118,13 @@ class ViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    
-
-    
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toColorPicker" {
+            if let destination = segue.destination as? ColorPickerViewController {
+                destination.color = coloredBox.backgroundColor
+            }
+        }
+    }
 }
 
 

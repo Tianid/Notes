@@ -3,6 +3,18 @@ import UIKit
 
 @IBDesignable
 class BoxFlag: UIView {
+    
+    let saturationExponentTop:Float = 2.0
+    let saturationExponentBottom:Float = 1.3
+    
+    @IBInspectable var isRainbowBackground: Bool = false
+    
+    @IBInspectable var elementSize: CGFloat = 1 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
     @IBInspectable var shapeColor: UIColor = .yellow {
         didSet {
             setNeedsDisplay()
@@ -32,11 +44,27 @@ class BoxFlag: UIView {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
+        if (isRainbowBackground) {
+            let context = UIGraphicsGetCurrentContext()
+            for y : CGFloat in stride(from: 0.0 ,to: rect.height , by: elementSize) {
+                var saturation = 2.0 * CGFloat(rect.height - y) / rect.height
+                
+                saturation = CGFloat(powf(Float(saturation), saturationExponentBottom))
+                for x : CGFloat in stride(from: 0.0 ,to: rect.width  , by: elementSize) {
+                    let hue = x / rect.width
+                    let color = UIColor(hue: hue, saturation: saturation, brightness: CGFloat(1), alpha: 1.0)
+                    context!.setFillColor(color.cgColor)
+                    context!.fill(CGRect(x:x, y:y, width:elementSize,height:elementSize))
+                }
+            }
+
+        }
+        
         guard !isShapeHiden else { return }
         shapeColor.setFill()
         setFlagPosition()
         let pathX = getX(in: CGRect(origin: shapePosition, size: shapeSize))
-        
+
         pathX.fill()
     }
     
