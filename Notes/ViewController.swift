@@ -1,8 +1,9 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextViewDelegate {
+class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
 
+    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var whiteBox: BoxFlag!
     @IBOutlet weak var redBox: BoxFlag!
@@ -104,7 +105,18 @@ class ViewController: UIViewController, UITextViewDelegate {
         textView.layer.borderColor = UIColor.gray.cgColor
         textView.delegate = self
         textViewDidChange(textView)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toColorPicker" {
+            if let destination = segue.destination as? ColorPickerViewController {
+                destination.color = coloredBox.backgroundColor
+            }
+        }
     }
     
     public func textViewDidChange(_ textView: UITextView) {
@@ -118,12 +130,9 @@ class ViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toColorPicker" {
-            if let destination = segue.destination as? ColorPickerViewController {
-                destination.color = coloredBox.backgroundColor
-            }
-        }
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        textView.resignFirstResponder()
+        titleTextField.resignFirstResponder()
     }
 }
 
