@@ -19,6 +19,7 @@
 		128F6D6B22CE93E600FD3F86 /* BoxFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128F6D6A22CE93E600FD3F86 /* BoxFlag.swift */; };
 		12C3CD6922D3611E00B6E22C /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C3CD6822D3611E00B6E22C /* ColorPicker.swift */; };
 		12C3CD6B22D36B9000B6E22C /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C3CD6A22D36B9000B6E22C /* ColorPickerViewController.swift */; };
+		12D79A0722D51495007384B6 /* CursorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D79A0622D51495007384B6 /* CursorView.swift */; };
 		12E3ACF622CA36CD006A4921 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12E3ACF522CA36CD006A4921 /* LaunchScreen.storyboard */; };
 		926C20E4E8A09A89D81BF1F7 /* libPods-NotesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D8AB0C9C2F5E7C37D82CA89 /* libPods-NotesTests.a */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		128F6D6A22CE93E600FD3F86 /* BoxFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxFlag.swift; sourceTree = "<group>"; };
 		12C3CD6822D3611E00B6E22C /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		12C3CD6A22D36B9000B6E22C /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
+		12D79A0622D51495007384B6 /* CursorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorView.swift; sourceTree = "<group>"; };
 		12E3ACF522CA36CD006A4921 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D8AB0C9C2F5E7C37D82CA89 /* libPods-NotesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NotesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBF4464F316ED336E57C76C /* Pods-Notes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.debug.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.debug.xcconfig"; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				128F6D6A22CE93E600FD3F86 /* BoxFlag.swift */,
 				12C3CD6822D3611E00B6E22C /* ColorPicker.swift */,
 				12C3CD6A22D36B9000B6E22C /* ColorPickerViewController.swift */,
+				12D79A0622D51495007384B6 /* CursorView.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				122483B822C6A9F900B402FA /* FileNotebook.swift in Sources */,
 				122483B722C6A9F900B402FA /* Note.swift in Sources */,
 				128F6D6B22CE93E600FD3F86 /* BoxFlag.swift in Sources */,
+				12D79A0722D51495007384B6 /* CursorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

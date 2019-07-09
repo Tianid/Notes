@@ -241,7 +241,7 @@
         <scene sceneID="mp6-G7-C3Z">
             <objects>
                 <viewController id="aEO-r5-Rjc" customClass="ColorPickerViewController" customModule="Notes" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Me1-GZ-GbE" customClass="TestView">
+                    <view key="view" contentMode="scaleToFill" id="Me1-GZ-GbE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -280,7 +280,7 @@
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hux-Fz-N5Y">
                                 <rect key="frame" x="28" y="75" width="68" height="65"/>
-                                <color key="backgroundColor" red="0.1545740189" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.03624573524" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="65" id="4oE-jD-eAE"/>
                                     <constraint firstAttribute="width" constant="68" id="HDy-xD-SSg"/>

@@ -12,37 +12,20 @@ class ColorPickerViewController: UIViewController {
         performSegue(withIdentifier: "toMain", sender: self)
     }
     
-    @IBAction func PanAction(_ sender: UIPanGestureRecognizer) {
-        color = colorPicker.getColorAt(point: sender.location(in: colorPicker))
-        boxColor.backgroundColor = color
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        var sliderValue: CGFloat = 0
+        color?.getHue(nil, saturation: nil, brightness: &sliderValue, alpha: nil)
+        sliderColor.value = Float(sliderValue)
+        colorPicker.myBrightness = sliderValue
         boxColor.backgroundColor = color
         boxColor.layer.borderWidth = 1
         boxColor.layer.cornerRadius = 10
         colorPicker.layer.borderWidth = 1
-        colorPicker.backgroundColor = .white
         sliderColor.addTarget(self, action: #selector(onSliderValChanged(slider:event:)), for: .allTouchEvents)
-        colorPicker.myBrightness = CGFloat(sliderColor.value)
-    }
-    
-    @objc func onSliderValChanged(slider: UISlider, event: UIEvent) {
-        if let touchEvent = event.allTouches?.first{
-            switch touchEvent.phase {
-            case .ended:
-                colorPicker.myBrightness = CGFloat(slider.value)
-                var hue: CGFloat = 0
-                var saturation: CGFloat = 0
-                color?.getHue(&hue, saturation: &saturation, brightness: nil, alpha: nil)
-                boxColor.backgroundColor = UIColor(hue: hue, saturation: saturation, brightness: CGFloat(slider.value), alpha: 1.0)
-            default:
-                break
-            }
-        }
+        colorPicker.boxColor = boxColor
+        colorPicker.drawCursor(at: colorPicker.getCursorPosition(for: boxColor.backgroundColor!))
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -50,5 +33,21 @@ class ColorPickerViewController: UIViewController {
             let vc = segue.destination as! ViewController
             vc.colorForColoderBox = boxColor.backgroundColor
         }
+    }
+    
+    @objc func onSliderValChanged(slider: UISlider, event: UIEvent) {
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        boxColor.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: nil, alpha: nil)
+        boxColor.backgroundColor = UIColor(hue: hue, saturation: saturation, brightness: CGFloat(slider.value), alpha: 1.0)
+        colorPicker.myBrightness = CGFloat(slider.value)
+        //        if let touchEvent = event.allTouches?.first{
+        //            switch touchEvent.phase {
+        //            case .ended:
+        //
+        //            default:
+        //                break
+        //            }
+        //        }
     }
 }
