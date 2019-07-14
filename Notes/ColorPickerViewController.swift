@@ -26,6 +26,9 @@ class ColorPickerViewController: UIViewController {
         sliderColor.addTarget(self, action: #selector(onSliderValChanged(slider:event:)), for: .allTouchEvents)
         colorPicker.boxColor = boxColor
         colorPicker.drawCursor(at: colorPicker.getCursorPosition(for: boxColor.backgroundColor!))
+        navigationController?.isNavigationBarHidden = true
+        tabBarController?.tabBar.isHidden = true
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

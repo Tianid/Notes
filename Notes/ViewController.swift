@@ -108,6 +108,9 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
+        tabBarController?.tabBar.isHidden = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(saveNote(_:)))
+
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -133,6 +136,10 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         textView.resignFirstResponder()
         titleTextField.resignFirstResponder()
+    }
+    
+    @objc func saveNote(_ sender: Any) {
+        //TODO: save actions
     }
 }
 
