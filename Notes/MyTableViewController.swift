@@ -7,6 +7,7 @@ class MyTableViewController: UIViewController {
     let reusableCell = "reusableCell"
     var fileNoteBook: FileNotebook?
     var notes = [Note]()
+    var noteIndex: Int?
     
     @IBAction func addButtonTap(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "toEditScreen", sender: nil)
@@ -17,20 +18,15 @@ class MyTableViewController: UIViewController {
         myTableView.delegate = self
         myTableView.dataSource = self
         fileNoteBook = FileNotebook()
-        fileNoteBook?.add(Note(uid: "as", title: "1", content: "asdf", color: .green, importance: .notImportant))
-        fileNoteBook?.add(Note(uid: "as1", title: "2", content: "asdf", color: .green, importance: .common))
-        fileNoteBook?.add(Note(uid: "as2", title: "3", content: "asdf", color: .white, importance: .important))
+//        fileNoteBook?.add(Note(uid: "as", title: "1", content: "asdf", color: .green, importance: .notImportant))
+//        fileNoteBook?.add(Note(uid: "as1", title: "2", content: "asdf", color: .red, importance: .common))
+//        fileNoteBook?.add(Note(uid: "as2", title: "3", content: "asdf", color: .white, importance: .important))
+//        fileNoteBook?.add(Note(uid: "sd3", title: "4", content: "qwerty", color: .orange, importance: .important, selfDestructionDate: Date()))
         
-        for value in (fileNoteBook?.notes.values)! {
-            notes.append(value)
-        }
+        notes = (fileNoteBook?.getArrayOfNotes())!
         
         myTableView.register(UINib(nibName: "MyTableViewCell", bundle: nil), forCellReuseIdentifier: reusableCell)
 //        myTableView.isEditing = true
-    }
-    
-    override func viewDidLayoutSubviews() {
-        
     }
 }
 
@@ -46,6 +42,7 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
             cell.noteContent.text = notes[indexPath.row].content
             cell.noteColor.backgroundColor = notes[indexPath.row].color
             cell.noteColor.layer.borderWidth = 1
+            cell.selectionStyle = .none
             return cell
     }
     
@@ -58,6 +55,32 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
         
         return UITableView.automaticDimension
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        noteIndex = indexPath.row
+        performSegue(withIdentifier: "toEditScreenWithData", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "toEditScreenWithData" {
+            if let destination = segue.destination as? ViewController{
+                destination.fileNoteBook = fileNoteBook
+                destination.note = self.notes[noteIndex!]
+            }
+        } else {
+            if segue.identifier == "toEditScreen" {
+                if let destination = segue.destination as? ViewController{
+                    destination.fileNoteBook = fileNoteBook
+                }
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        notes = (fileNoteBook?.getArrayOfNotes())!
+        myTableView.reloadData()
     }
     
 }

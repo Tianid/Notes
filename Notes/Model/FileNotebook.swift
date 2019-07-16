@@ -20,6 +20,10 @@ class FileNotebook {
         }
     }
     
+    public func updateNotes(_ note: Note) {
+        self.notes.updateValue(note, forKey: note.uid)
+    }
+    
     public func remove(with uid: String) {
         self.notes.removeValue(forKey: uid)
     }
@@ -67,6 +71,20 @@ class FileNotebook {
                     }
                 }
             } catch {}
+        }
+    }
+    
+    public func getArrayOfNotes() -> [Note]{
+        var notesArray = [Note]()
+        for value in (notes.values) {
+            notesArray.append(value)
+        }
+        return notesArray
+    }
+    
+    public func saveDataFromArrayToDictionary(notes: [Note]) {
+        for value in notes {
+            self.notes.updateValue(value, forKey: value.uid)
         }
     }
     

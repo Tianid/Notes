@@ -15,13 +15,14 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
     var colorForColoderBox: UIColor? = nil
     var boxChar: Character?
     var destroyDate: Date?
+    var fileNoteBook: FileNotebook?
+    var note:Note?
+    var colorFromPallet: UIColor?
     
     
     @IBAction func actionDateSwitcher(_ sender: UISwitch) {
-        datePicker.isHidden = !datePicker.isHidden
-        if datePicker.isHidden {
-            destroyDate = nil
-        }
+        destroyDate = datePicker.date
+        switchDate()
     }
     
     @IBAction func actionDatePicker(_ sender: UIDatePicker) {
@@ -60,22 +61,49 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
     }
     
     @IBAction func longTapToCallPalette(_ sender: UILongPressGestureRecognizer) {
-        
         if sender.state == .began {
-            coloredBox.isShapeHiden = !coloredBox.isShapeHiden
-            if !coloredBox.isShapeHiden {
-                redBox.isShapeHiden = true
-                whiteBox.isShapeHiden = true
-                greenBox.isShapeHiden = true
-            }
+            redBox.isShapeHiden = true
+            whiteBox.isShapeHiden = true
+            greenBox.isShapeHiden = true
             performSegue(withIdentifier: "toColorPicker", sender: self)
         }
-        
+    }
+    
+    @IBAction func unwindToEditorScreen(_ unwindSegue: UIStoryboardSegue) {
+        let sourceViewController = unwindSegue.source as! ColorPickerViewController
+        coloredBox.isRainbowBackground = false
+        coloredBox.isShapeHiden = false
+        coloredBox.backgroundColor = sourceViewController.colorPicker.boxColor?.backgroundColor
+        // Use data from the view controller which initiated the unwind segue
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if note != nil {
+            titleTextField.text = note?.title
+            textView.text = note?.content
+            
+            if note?.selfDestructionDate != nil {
+                datePicker.setDate((note?.selfDestructionDate)!, animated: false)
+                dateSwitcher.isOn = true
+                switchDate()
+            }
+            switch note?.color {
+            case UIColor.red:
+                redBox.isShapeHiden = false
+            case UIColor.green:
+                greenBox.isShapeHiden = false
+            case UIColor.white:
+                whiteBox.isShapeHiden = false
+            default:
+                colorForColoderBox = note!.color
+                coloredBox.isShapeHiden = false
+            }
+        } else {
+            textView.text = ""
+            titleTextField.text = ""
+        }
+  
         whiteBox.backgroundColor = UIColor.white
         whiteBox.layer.borderWidth = 1
         whiteBox.layer.borderColor = UIColor.gray.cgColor
@@ -109,7 +137,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
         tabBarController?.tabBar.isHidden = true
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(saveNote(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveNote(_:)))
 
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -119,6 +147,15 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
             if let destination = segue.destination as? ColorPickerViewController {
                 destination.color = coloredBox.backgroundColor
             }
+        }
+    }
+    
+
+    
+    private func switchDate() {
+        datePicker.isHidden = !datePicker.isHidden
+        if datePicker.isHidden {
+            destroyDate = nil
         }
     }
     
@@ -139,7 +176,37 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
     }
     
     @objc func saveNote(_ sender: Any) {
-        //TODO: save actions
+        titleTextField.text! = titleTextField.text!.trimmingCharacters(in:.whitespacesAndNewlines)
+        textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if titleTextField.text!.isEmpty || textView.text.isEmpty {
+            let alert = UIAlertController(title: "Alert", message: "Fill title and content fields", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        if note == nil {
+            let newNote = Note(title: titleTextField.text!, content: textView.text, color: getColorOfSelectedBox()!, importance: .common, selfDestructionDate:             datePicker.date)
+            fileNoteBook?.add(newNote)
+        } else {
+            let uid = note?.uid
+            let newNote = Note(uid: uid!, title: titleTextField.text!, content: textView.text, color: getColorOfSelectedBox()!, importance: .common, selfDestructionDate: destroyDate)
+            fileNoteBook?.updateNotes(newNote)
+        }
+        navigationController?.popViewController(animated: true)
+    }
+    
+    private func getColorOfSelectedBox() -> UIColor? {
+        let array = [greenBox,whiteBox,redBox,coloredBox]
+        var color:UIColor?
+        for item in array {
+            if item?.isShapeHiden == false {
+                color = item?.backgroundColor
+            }
+        }
+        guard color == nil else { return color }
+        color = .white
+        return color
     }
 }
 

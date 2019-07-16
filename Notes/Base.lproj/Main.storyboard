@@ -43,6 +43,7 @@
                     <connections>
                         <outlet property="myTableView" destination="fl5-E2-e74" id="eAs-AG-0qo"/>
                         <segue destination="Vec-u0-h34" kind="show" identifier="toEditScreen" id="ETI-2l-MWr"/>
+                        <segue destination="Vec-u0-h34" kind="show" identifier="toEditScreenWithData" id="wlw-n0-Nu2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cOW-mK-m3h" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -315,8 +316,7 @@
                                 <rect key="frame" x="142" y="635" width="92" height="30"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
-                                    <action selector="actionDone:" destination="aEO-r5-Rjc" eventType="touchUpInside" id="9mf-pd-s2f"/>
-                                    <segue destination="Vec-u0-h34" kind="show" identifier="toMain" id="8jA-Ik-Rwd"/>
+                                    <segue destination="TSn-D4-Z2x" kind="unwind" unwindAction="unwindToEditorScreen:" id="9cr-bl-1Hg"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hux-Fz-N5Y">
@@ -356,6 +356,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VeO-aR-4se" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="TSn-D4-Z2x" userLabel="Exit" sceneMemberID="exit"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="nbH-Zc-2ei">
                     <connections>
                         <action selector="PanAction:" destination="aEO-r5-Rjc" id="Vc0-De-ole"/>
@@ -439,6 +440,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ETI-2l-MWr"/>
+        <segue reference="wlw-n0-Nu2"/>
     </inferredMetricsTieBreakers>
 </document>

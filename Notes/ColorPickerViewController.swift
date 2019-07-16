@@ -8,10 +8,6 @@ class ColorPickerViewController: UIViewController {
     
     var color: UIColor?
     
-    @IBAction func actionDone(_ sender: UIButton) {
-        performSegue(withIdentifier: "toMain", sender: self)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,16 +22,8 @@ class ColorPickerViewController: UIViewController {
         sliderColor.addTarget(self, action: #selector(onSliderValChanged(slider:event:)), for: .allTouchEvents)
         colorPicker.boxColor = boxColor
         colorPicker.drawCursor(at: colorPicker.getCursorPosition(for: boxColor.backgroundColor!))
-        navigationController?.isNavigationBarHidden = true
+//        navigationController?.isNavigationBarHidden = true
         tabBarController?.tabBar.isHidden = true
-
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toMain" {
-            let vc = segue.destination as! ViewController
-            vc.colorForColoderBox = boxColor.backgroundColor
-        }
     }
     
     @objc func onSliderValChanged(slider: UISlider, event: UIEvent) {
