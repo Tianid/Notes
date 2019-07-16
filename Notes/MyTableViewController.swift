@@ -22,13 +22,11 @@ class MyTableViewController: UIViewController {
         myTableView.delegate = self
         myTableView.dataSource = self
         fileNoteBook = FileNotebook()
-        fileNoteBook?.add(Note(uid: "as", title: "1", content: "asdf", color: .green, importance: .notImportant))
-        fileNoteBook?.add(Note(uid: "as1", title: "2", content: "asdf", color: .red, importance: .common))
-        fileNoteBook?.add(Note(uid: "as2", title: "3", content: "asdf", color: .white, importance: .important))
-        fileNoteBook?.add(Note(uid: "sd3", title: "4", content: "qwerty", color: .orange, importance: .important, selfDestructionDate: Date()))
-        
+//        fileNoteBook?.add(Note(uid: "as", title: "1", content: "asdf", color: .green, importance: .notImportant))
+//        fileNoteBook?.add(Note(uid: "as1", title: "2", content: "asdf", color: .red, importance: .common))
+//        fileNoteBook?.add(Note(uid: "as2", title: "3", content: "asdf", color: .white, importance: .important))
+//        fileNoteBook?.add(Note(uid: "sd3", title: "4", content: "qwerty", color: .orange, importance: .important, selfDestructionDate: Date()))
         notes = (fileNoteBook?.getArrayOfNotes())!
-        
         myTableView.register(UINib(nibName: "MyTableViewCell", bundle: nil), forCellReuseIdentifier: reusableCell)
 //        myTableView.isEditing = true
     }
@@ -85,6 +83,7 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
         notes = (fileNoteBook?.getArrayOfNotes())!
         myTableView.reloadData()
+        tabBarController?.tabBar.isHidden = false
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

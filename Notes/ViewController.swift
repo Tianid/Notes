@@ -186,7 +186,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
         }
         
         if note == nil {
-            let newNote = Note(title: titleTextField.text!, content: textView.text, color: getColorOfSelectedBox()!, importance: .common, selfDestructionDate:             datePicker.date)
+            let newNote = Note(title: titleTextField.text!, content: textView.text, color: getColorOfSelectedBox()!, importance: .common, selfDestructionDate: destroyDate)
             fileNoteBook?.add(newNote)
         } else {
             let uid = note?.uid

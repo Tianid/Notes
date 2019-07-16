@@ -388,21 +388,59 @@
             </objects>
             <point key="canvasLocation" x="-1714" y="-112"/>
         </scene>
-        <!--View Controller-->
+        <!--Gallery-->
         <scene sceneID="Dx0-Po-9pf">
             <objects>
-                <viewController id="aF6-9b-ao7" sceneMemberID="viewController">
+                <viewController id="aF6-9b-ao7" customClass="GalleryViewController" customModule="Notes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YTW-E8-jIf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="yCx-Qz-Yac"/>
                     </view>
-                    <navigationItem key="navigationItem" id="WSt-8B-mRM"/>
+                    <navigationItem key="navigationItem" title="Gallery" id="WSt-8B-mRM">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="uod-WI-arh">
+                            <connections>
+                                <action selector="addButtonTap:" destination="aF6-9b-ao7" id="nR6-YY-WfG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="WIL-xn-iGU" kind="show" identifier="toDetailImagesScreen" id="zfb-zf-n8F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vbz-Ps-8tm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-887" y="590"/>
+            <point key="canvasLocation" x="-887.20000000000005" y="589.65517241379314"/>
+        </scene>
+        <!--Detail Images View Controller-->
+        <scene sceneID="w7i-ch-XaA">
+            <objects>
+                <viewController storyboardIdentifier="DetailVC" id="WIL-xn-iGU" customClass="DetailImagesViewController" customModule="Notes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="K92-eK-bC1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7LX-71-tpN">
+                                <rect key="frame" x="16" y="88" width="343" height="641"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="IRH-7K-eAq" firstAttribute="trailing" secondItem="7LX-71-tpN" secondAttribute="trailing" constant="16" id="YMN-Uh-ePn"/>
+                            <constraint firstItem="7LX-71-tpN" firstAttribute="leading" secondItem="IRH-7K-eAq" secondAttribute="leading" constant="16" id="cwx-WB-wJA"/>
+                            <constraint firstItem="7LX-71-tpN" firstAttribute="top" secondItem="IRH-7K-eAq" secondAttribute="top" id="mua-Rm-7CI"/>
+                            <constraint firstItem="7LX-71-tpN" firstAttribute="bottom" secondItem="IRH-7K-eAq" secondAttribute="bottom" id="tb3-p4-1kV"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="IRH-7K-eAq"/>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="7LX-71-tpN" id="M0n-FJ-xMe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gu3-5d-GyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-44" y="589.65517241379314"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="IeH-FH-shD">
@@ -423,11 +461,11 @@
             </objects>
             <point key="canvasLocation" x="-2615.1999999999998" y="119.70443349753695"/>
         </scene>
-        <!--Gellery-->
+        <!--Gallery-->
         <scene sceneID="6Gz-Ae-yve">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8EZ-dY-fGT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Gellery" id="25u-Wp-z1y"/>
+                    <tabBarItem key="tabBarItem" title="Gallery" id="25u-Wp-z1y"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vVb-bu-vTl">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
