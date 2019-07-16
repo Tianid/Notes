@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--My Table View Controller-->
+        <!--Notes-->
         <scene sceneID="O1i-Sf-VU2">
             <objects>
                 <viewController id="odT-fc-KW2" customClass="MyTableViewController" customModule="Notes" customModuleProvider="target" sceneMemberID="viewController">
@@ -32,8 +32,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="U3R-q5-f1V"/>
                     </view>
-                    <navigationItem key="navigationItem" id="QVD-Ru-EXc">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="qae-ya-xqj"/>
+                    <navigationItem key="navigationItem" title="Notes" id="QVD-Ru-EXc">
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="qae-ya-xqj">
+                            <connections>
+                                <action selector="editButtonTap:" destination="odT-fc-KW2" id="hmN-pC-1VA"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="SCM-UR-QoP">
                             <connections>
                                 <action selector="addButtonTap:" destination="odT-fc-KW2" id="ncU-Mp-Qj6"/>
