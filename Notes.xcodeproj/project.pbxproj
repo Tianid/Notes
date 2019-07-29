@@ -142,22 +142,14 @@
 				12E738AD22EF2DA1002DF6B8 /* Operations */,
 				122483B322C6A9F900B402FA /* Model */,
 				1224839022C6888900B402FA /* AppDelegate.swift */,
-				1224839222C6888900B402FA /* ViewController.swift */,
 				1224839422C6888900B402FA /* Main.storyboard */,
 				12E3ACF522CA36CD006A4921 /* LaunchScreen.storyboard */,
 				1224839722C6888B00B402FA /* Assets.xcassets */,
 				1224839C22C6888B00B402FA /* Info.plist */,
-				128F6D6A22CE93E600FD3F86 /* BoxFlag.swift */,
-				12C3CD6822D3611E00B6E22C /* ColorPicker.swift */,
-				12C3CD6A22D36B9000B6E22C /* ColorPickerViewController.swift */,
-				12D79A0622D51495007384B6 /* CursorView.swift */,
-				12ABCE2922DBBBA600AF1214 /* MyTableViewController.swift */,
-				12ABCE2B22DBC46E00AF1214 /* MyTableViewCell.swift */,
-				12ABCE2C22DBC46E00AF1214 /* MyTableViewCell.xib */,
-				12A2CCCA22DE25AD00F7EB06 /* GalleryCollectionView.swift */,
-				12A2CCCC22DE271C00F7EB06 /* GalleryCollectionViewCell.swift */,
-				12A2CCCE22DE28C800F7EB06 /* GalleryViewController.swift */,
-				12A2CCD022DE4EEA00F7EB06 /* DetailImagesViewController.swift */,
+				12E738C722EF8B69002DF6B8 /* NoteRedactor */,
+				12E738C622EF8B22002DF6B8 /* ColorPicker */,
+				12E738C822EF8B87002DF6B8 /* TableView */,
+				12E738C922EF8B9A002DF6B8 /* GalleryView */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -213,6 +205,46 @@
 				12E738BC22EF36FA002DF6B8 /* LoadNotesBackendOperation.swift */,
 			);
 			path = BackendOpertations;
+			sourceTree = "<group>";
+		};
+		12E738C622EF8B22002DF6B8 /* ColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				12C3CD6822D3611E00B6E22C /* ColorPicker.swift */,
+				12C3CD6A22D36B9000B6E22C /* ColorPickerViewController.swift */,
+				12D79A0622D51495007384B6 /* CursorView.swift */,
+			);
+			path = ColorPicker;
+			sourceTree = "<group>";
+		};
+		12E738C722EF8B69002DF6B8 /* NoteRedactor */ = {
+			isa = PBXGroup;
+			children = (
+				128F6D6A22CE93E600FD3F86 /* BoxFlag.swift */,
+				1224839222C6888900B402FA /* ViewController.swift */,
+			);
+			path = NoteRedactor;
+			sourceTree = "<group>";
+		};
+		12E738C822EF8B87002DF6B8 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				12ABCE2922DBBBA600AF1214 /* MyTableViewController.swift */,
+				12ABCE2B22DBC46E00AF1214 /* MyTableViewCell.swift */,
+				12ABCE2C22DBC46E00AF1214 /* MyTableViewCell.xib */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		12E738C922EF8B9A002DF6B8 /* GalleryView */ = {
+			isa = PBXGroup;
+			children = (
+				12A2CCCA22DE25AD00F7EB06 /* GalleryCollectionView.swift */,
+				12A2CCCC22DE271C00F7EB06 /* GalleryCollectionViewCell.swift */,
+				12A2CCCE22DE28C800F7EB06 /* GalleryViewController.swift */,
+				12A2CCD022DE4EEA00F7EB06 /* DetailImagesViewController.swift */,
+			);
+			path = GalleryView;
 			sourceTree = "<group>";
 		};
 		69F4F99813072D8561F43117 /* Frameworks */ = {
