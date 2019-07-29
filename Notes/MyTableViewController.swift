@@ -22,11 +22,33 @@ class MyTableViewController: UIViewController {
         myTableView.delegate = self
         myTableView.dataSource = self
         fileNoteBook = FileNotebook()
+        
+        let backendQueue = OperationQueue()
+        let dbQueue = OperationQueue()
+//        let commonQueu = OperationQueue()
+        
+        let loadNotesOperation = LoadNotesOperation(notebook: fileNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
+        OperationQueue.main.addOperation(loadNotesOperation)
+        
+        
 //        fileNoteBook?.add(Note(uid: "as", title: "1", content: "asdf", color: .green, importance: .notImportant))
 //        fileNoteBook?.add(Note(uid: "as1", title: "2", content: "asdf", color: .red, importance: .common))
 //        fileNoteBook?.add(Note(uid: "as2", title: "3", content: "asdf", color: .white, importance: .important))
 //        fileNoteBook?.add(Note(uid: "sd3", title: "4", content: "qwerty", color: .orange, importance: .important, selfDestructionDate: Date()))
-        notes = (fileNoteBook?.getArrayOfNotes())!
+//        fileNoteBook?.add(Note(uid: "as4", title: "5", content: "asdf", color: .green, importance: .notImportant))
+//        fileNoteBook?.add(Note(uid: "as5", title: "6", content: "asdf", color: .red, importance: .common))
+//        fileNoteBook?.add(Note(uid: "as6", title: "7", content: "asdf", color: .white, importance: .important))
+//        fileNoteBook?.add(Note(uid: "as7", title: "8", content: "asdf", color: .green, importance: .notImportant))
+//        fileNoteBook?.add(Note(uid: "as8", title: "9", content: "asdf", color: .red, importance: .common))
+//        fileNoteBook?.add(Note(uid: "as9", title: "10", content: "asdf", color: .white, importance: .important))
+//        fileNoteBook?.add(Note(uid: "as10", title: "11", content: "asdf", color: .green, importance: .notImportant))
+//        fileNoteBook?.add(Note(uid: "as11", title: "12", content: "asdf", color: .red, importance: .common))
+//        fileNoteBook?.add(Note(uid: "as12", title: "13", content: "asdf", color: .white, importance: .important))
+//        fileNoteBook?.add(Note(uid: "as13", title: "14", content: "asdf", color: .green, importance: .notImportant))
+//        fileNoteBook?.add(Note(uid: "as14", title: "15", content: "asdf", color: .red, importance: .common))
+//        fileNoteBook?.add(Note(uid: "as15", title: "16", content: "asdf", color: .white, importance: .important))
+        
+//        notes = (fileNoteBook?.getArrayOfNotes())!
         myTableView.register(UINib(nibName: "MyTableViewCell", bundle: nil), forCellReuseIdentifier: reusableCell)
 //        myTableView.isEditing = true
     }
@@ -34,6 +56,7 @@ class MyTableViewController: UIViewController {
 
 extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        notes = (fileNoteBook?.getArrayOfNotes())!
         return notes.count
     }
     
@@ -96,7 +119,13 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
             myTableView.beginUpdates()
             let temp = notes[indexPath.row]
             notes.remove(at: indexPath.row)
-            fileNoteBook?.remove(with: temp.uid)
+//            fileNoteBook?.remove(with: temp.uid)
+            let backendQueue = OperationQueue()
+            let dbQueue = OperationQueue()
+            let removeNoteOperation = RemoveNoteOperation(note: temp, notebook: fileNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
+            
+            OperationQueue.main.addOperation(removeNoteOperation)
+
             myTableView.deleteRows(at: [indexPath], with: .automatic)
             myTableView.endUpdates()
 //            myTableView.reloadData()

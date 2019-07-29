@@ -185,14 +185,43 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
             return
         }
         
+        let backendQueue = OperationQueue()
+        let dbQueue = OperationQueue()
+//        let commonQueue = OperationQueue()
+        
         if note == nil {
             let newNote = Note(title: titleTextField.text!, content: textView.text, color: getColorOfSelectedBox()!, importance: .common, selfDestructionDate: destroyDate)
-            fileNoteBook?.add(newNote)
+//            fileNoteBook?.add(newNote)
+            let saveNoteOperation = SaveNoteOperation(note: newNote, notebook: fileNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
+//            commonQueue.addOperation(saveNoteOperation)
+            OperationQueue.main.addOperation(saveNoteOperation)
+//            let updateUI = BlockOperation {
+//                print(saveNoteOperation.result)
+//                print(self.fileNoteBook?.notes.count)
+//            }
+//            OperationQueue.main.addOperation(updateUI)
+
+            
         } else {
             let uid = note?.uid
-            let newNote = Note(uid: uid!, title: titleTextField.text!, content: textView.text, color: getColorOfSelectedBox()!, importance: .common, selfDestructionDate: destroyDate)
-            fileNoteBook?.updateNotes(newNote)
+            fileNoteBook?.remove(with: uid!)
+            let newNote = Note(title: titleTextField.text!, content: textView.text, color: getColorOfSelectedBox()!, importance: .common, selfDestructionDate: destroyDate)
+//            fileNoteBook?.updateNotes(newNote)
+            let saveNoteOperation = SaveNoteOperation(note: newNote, notebook: fileNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
+//            commonQueue.addOperation(saveNoteOperation)
+            
+            OperationQueue.main.addOperation(saveNoteOperation)
+
+//            let updateUI = BlockOperation {
+//                print(saveNoteOperation.result)
+//                print(self.fileNoteBook?.notes.count)
+//            }
+//
+//            OperationQueue.main.addOperation(updateUI)
         }
+        
+        
+        
         navigationController?.popViewController(animated: true)
     }
     

@@ -6,18 +6,20 @@ class FileNotebook {
     
     init() {
         self.notes = [String:Note]()
-        loadFromFile()
+//        loadFromFile()
     }
     
     public func add(_ note: Note) {
-        if self.notes.count > 0 {
-            let keys = self.notes.keys
-            if (keys.firstIndex(of: note.uid ) == nil) {
-                self.notes.updateValue(note, forKey: note.uid)
-            }
-        } else {
-            self.notes.updateValue(note, forKey: note.uid)
-        }
+//        if self.notes.count > 0 {
+//            let keys = self.notes.keys
+//            if (keys.firstIndex(of: note.uid ) == nil) {
+//                self.notes.updateValue(note, forKey: note.uid)
+//            }
+//        } else {
+//            self.notes.updateValue(note, forKey: note.uid)
+//        }
+        self.notes.updateValue(note, forKey: note.uid)
+
     }
     
     public func updateNotes(_ note: Note) {
@@ -50,6 +52,7 @@ class FileNotebook {
         do {
             let data = try JSONSerialization.data(withJSONObject: result, options: [])
             print(FileManager.default.createFile(atPath: filename!.path, contents: data, attributes: nil) , " - result of creating")
+            print("absolute savepath - ",filename?.absoluteURL as Any)
         } catch {}
     }
     
@@ -86,6 +89,10 @@ class FileNotebook {
         for value in notes {
             self.notes.updateValue(value, forKey: value.uid)
         }
+    }
+    
+    public func setDictionaty(dict: [String:Note]) {
+        self.notes = dict
     }
     
 //    public func deleteDirWithNotes() {
