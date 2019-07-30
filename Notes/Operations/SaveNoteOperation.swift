@@ -16,7 +16,7 @@ class SaveNoteOperation: AsyncOperation {
         self.notebook = notebook
         
         saveToDb = SaveNoteDBOperation(note: note, notebook: notebook)
-        saveToBackend = SaveNotesBackendOperation(notes: notebook.getArrayOfNotes())
+        saveToBackend = SaveNotesBackendOperation(noteBook: notebook)
         
         super.init()
         

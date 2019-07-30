@@ -12,7 +12,7 @@ enum SaveNotesBackendResult {
 class SaveNotesBackendOperation: BaseBackendOperation {
     var result: SaveNotesBackendResult?
     
-    init(notes: [Note]) {
+    init(noteBook: FileNotebook) {
         super.init()
     }
     
