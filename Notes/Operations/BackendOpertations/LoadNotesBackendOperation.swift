@@ -8,6 +8,7 @@ enum LoadNotesBackendResult {
 class LoadNotesBackendOperation: BaseBackendOperation {
     var result: LoadNotesBackendResult?
     var noteBook: FileNotebook?
+    var notes: [Note]?
     
     init(noteBook: FileNotebook) {
         super.init()

@@ -15,16 +15,16 @@ class RemoveNoteOperation: AsyncOperation {
         
         self.notebook = notebook
         removeFromeDb = RemoveNotesDBOperation(note: note, notebook: notebook)
+        saveToBackend = SaveNotesBackendOperation(notes: notebook.getArrayOfNotes())
         
         super.init()
         
         removeFromeDb.completionBlock = {
-            let saveToBackend = SaveNotesBackendOperation(notes: notebook.getArrayOfNotes())
-            self.saveToBackend = saveToBackend
-            self.addDependency(saveToBackend)
-            backendQueue.addOperation(saveToBackend)
+            
+            backendQueue.addOperation(self.saveToBackend!)
         }
         addDependency(removeFromeDb)
+        addDependency(saveToBackend!)
         dbQueue.addOperation(removeFromeDb)
         
     }

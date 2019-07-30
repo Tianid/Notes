@@ -16,16 +16,15 @@ class LoadNotesOperation: AsyncOperation {
         self.notebook = notebook
         self.fromLocalDBNotes = [String:Note]()
         loadFromDB = LoadNotesDBOperation(notebook: notebook)
+        loadFromBackend = LoadNotesBackendOperation(noteBook: notebook)
         
         super.init()
         
         loadFromDB.completionBlock = {
-            let loadFromBackend = LoadNotesBackendOperation(noteBook: notebook)
-            self.loadFromBackend = loadFromBackend
-            self.addDependency(loadFromBackend)
-            backendQueue.addOperation(loadFromBackend)
+            backendQueue.addOperation(self.loadFromBackend!)
         }
         addDependency(loadFromDB)
+        addDependency(loadFromBackend!)
         dbQueue.addOperation(loadFromDB)
         fromLocalDBNotes = notebook.notes
         
@@ -35,11 +34,24 @@ class LoadNotesOperation: AsyncOperation {
         switch loadFromBackend!.result! {
         case .success:
             result = true
-            fromLocalDBNotes = nil
+            if isEqual() != true {
+                fromLocalDBNotes = nil
+            }
         case .failure:
             result = false
         }
         finish()
+    }
+    
+    func isEqual() -> Bool{
+        for valueBackend in loadFromBackend!.notes! {
+            for valueLocal in fromLocalDBNotes!.keys {
+                if valueBackend.uid != valueLocal {
+                    return false
+                }
+            }
+        }
+        return true
     }
 }
 
