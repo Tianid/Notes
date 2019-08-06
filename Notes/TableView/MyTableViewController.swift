@@ -20,15 +20,28 @@ class MyTableViewController: UIViewController {
         myTableView.delegate = self
         myTableView.dataSource = self
         fileNoteBook = FileNotebook()
-        
+        notes = (fileNoteBook?.getArrayOfNotes())!
         let backendQueue = OperationQueue()
         let dbQueue = OperationQueue()
         let commonQueu = OperationQueue()
         
         let loadNotesOperation = LoadNotesOperation(notebook: fileNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
-        
+        loadNotesOperation.completionBlock = { [unowned self] in
+            DispatchQueue.main.async {
+                
+                if loadNotesOperation.result == "sucsses" || loadNotesOperation.result == "emptyFile" {
+                    // Data from GitHub Gists, if gist is empty then  tableview will be empty too
+                    self.notes = (self.fileNoteBook?.getArrayOfNotes())!
+                    self.myTableView.reloadData()
+                } else {
+                    
+                    // Data from local storage
+                    self.notes = (self.fileNoteBook?.getArrayOfNotes())!
+                    self.myTableView.reloadData()
+                }
+            }
+        }
         commonQueu.addOperation(loadNotesOperation)
-
         myTableView.register(UINib(nibName: "MyTableViewCell", bundle: nil), forCellReuseIdentifier: reusableCell)
 //        myTableView.isEditing = true
     }
@@ -36,18 +49,21 @@ class MyTableViewController: UIViewController {
 
 extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (fileNoteBook?.notes.count)!
+        
+        return notes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            notes = (self.fileNoteBook?.getArrayOfNotes())!
+//            notes = (self.fileNoteBook?.getArrayOfNotes())!
             let cell = myTableView.dequeueReusableCell(withIdentifier: reusableCell, for: indexPath) as! MyTableViewCell
-            
+        if notes.count != 0 {
             cell.noteTitle.text = notes[indexPath.row].title
             cell.noteContent.text = notes[indexPath.row].content
             cell.noteColor.backgroundColor = notes[indexPath.row].color
             cell.noteColor.layer.borderWidth = 1
             cell.selectionStyle = .none
+        }
+            
             return cell
     }
     

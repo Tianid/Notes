@@ -4,17 +4,17 @@ class LoadNotesOperation: AsyncOperation {
     private let notebook: FileNotebook
     private let loadFromDB: LoadNotesDBOperation
     private var loadFromBackend: LoadNotesBackendOperation?
-    var fromLocalDBNotes: [String:Note]?
+//    var fromLocalDBNotes: [String:Note]?
     
-    private(set) var result: Bool? = false
-    
+    private(set) var result: String?
+
     init(
          notebook: FileNotebook,
          backendQueue: OperationQueue,
          dbQueue: OperationQueue) {
 
         self.notebook = notebook
-        self.fromLocalDBNotes = [String:Note]()
+//        self.fromLocalDBNotes = [String:Note]()
         loadFromDB = LoadNotesDBOperation(notebook: notebook)
         loadFromBackend = LoadNotesBackendOperation(noteBook: notebook)
         
@@ -26,32 +26,33 @@ class LoadNotesOperation: AsyncOperation {
         addDependency(loadFromDB)
         addDependency(loadFromBackend!)
         dbQueue.addOperation(loadFromDB)
-        fromLocalDBNotes = notebook.notes
+//        fromLocalDBNotes = notebook.notes
         
     }
     
     override func main() {
         switch loadFromBackend!.result! {
         case .success:
-            result = true
-            if isEqual() != true {
-                fromLocalDBNotes = nil
-            }
+            notebook.saveDataFromArrayToDictionary(notes: (loadFromBackend?.networkNoteBook.notes)!, cleanFlag: true)
+            result = "sucsses"
+           
         case .failure:
-            result = false
-        }
-        finish()
+            result = "failure"
+        case .emptyFile:
+            result = "emptyFile"
+            self.notebook.cleanNotes()
     }
-    
-    func isEqual() -> Bool{
-        for valueBackend in loadFromBackend!.notes! {
-            for valueLocal in fromLocalDBNotes!.keys {
-                if valueBackend.uid != valueLocal {
-                    return false
-                }
-            }
-        }
-        return true
+    finish()
+//    func isEqual() -> Bool{
+//        for valueBackend in loadFromBackend!.notes! {
+//            for valueLocal in fromLocalDBNotes!.keys {
+//                if valueBackend.uid != valueLocal {
+//                    return false
+//                }
+//            }
+//        }
+//        return true
+//    }
     }
-}
 
+}

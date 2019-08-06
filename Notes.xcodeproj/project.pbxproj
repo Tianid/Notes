@@ -24,6 +24,7 @@
 		12ABCE2A22DBBBA600AF1214 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12ABCE2922DBBBA600AF1214 /* MyTableViewController.swift */; };
 		12ABCE2D22DBC46E00AF1214 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12ABCE2B22DBC46E00AF1214 /* MyTableViewCell.swift */; };
 		12ABCE2E22DBC46E00AF1214 /* MyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12ABCE2C22DBC46E00AF1214 /* MyTableViewCell.xib */; };
+		12B9C1E422F8ACCA00B12260 /* NetworkNoteBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B9C1E322F8ACCA00B12260 /* NetworkNoteBook.swift */; };
 		12C3CD6922D3611E00B6E22C /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C3CD6822D3611E00B6E22C /* ColorPicker.swift */; };
 		12C3CD6B22D36B9000B6E22C /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C3CD6A22D36B9000B6E22C /* ColorPickerViewController.swift */; };
 		12D79A0722D51495007384B6 /* CursorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D79A0622D51495007384B6 /* CursorView.swift */; };
@@ -74,6 +75,7 @@
 		12ABCE2922DBBBA600AF1214 /* MyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
 		12ABCE2B22DBC46E00AF1214 /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		12ABCE2C22DBC46E00AF1214 /* MyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyTableViewCell.xib; sourceTree = "<group>"; };
+		12B9C1E322F8ACCA00B12260 /* NetworkNoteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNoteBook.swift; sourceTree = "<group>"; };
 		12C3CD6822D3611E00B6E22C /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		12C3CD6A22D36B9000B6E22C /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		12D79A0622D51495007384B6 /* CursorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorView.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				122483B422C6A9F900B402FA /* Note.swift */,
 				122483B522C6A9F900B402FA /* FileNotebook.swift */,
 				122483B622C6A9F900B402FA /* NoteExtensions.swift */,
+				12B9C1E322F8ACCA00B12260 /* NetworkNoteBook.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				1224839122C6888900B402FA /* AppDelegate.swift in Sources */,
 				12C3CD6B22D36B9000B6E22C /* ColorPickerViewController.swift in Sources */,
 				12E738BB22EF2DA1002DF6B8 /* SaveNotesBackendOperation.swift in Sources */,
+				12B9C1E422F8ACCA00B12260 /* NetworkNoteBook.swift in Sources */,
 				12ABCE2D22DBC46E00AF1214 /* MyTableViewCell.swift in Sources */,
 				12E738B822EF2DA1002DF6B8 /* SaveNoteOperation.swift in Sources */,
 				12C3CD6922D3611E00B6E22C /* ColorPicker.swift in Sources */,

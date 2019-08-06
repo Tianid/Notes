@@ -67,7 +67,7 @@ class FileNotebook {
                 let data = try Data(contentsOf: dirUrl!)
                 let serializableData = try JSONSerialization.jsonObject(with: data, options: []) as! [[String : Any]]
                 for dictionary in serializableData {
-                    print(dictionary)
+//                    print(dictionary)
                     if let note = Note.parse(json: dictionary) {
                         self.add(note)
                     }
@@ -84,7 +84,10 @@ class FileNotebook {
         return notesArray
     }
     
-    public func saveDataFromArrayToDictionary(notes: [Note]) {
+    public func saveDataFromArrayToDictionary(notes: [Note], cleanFlag:Bool = false) {
+        if cleanFlag {
+            self.notes.removeAll()
+        }
         for value in notes {
             self.notes.updateValue(value, forKey: value.uid)
         }
@@ -93,6 +96,11 @@ class FileNotebook {
     public func setDictionaty(dict: [String:Note]) {
         self.notes = dict
     }
+    
+    public func cleanNotes() {
+        self.notes.removeAll()
+    }
+    
     
 //    public func deleteDirWithNotes() {
 //        let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
