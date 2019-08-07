@@ -36,6 +36,8 @@ class SaveNoteOperation: AsyncOperation {
             result = true
         case .failure:
             result = false
+        case .noData:
+            result = false
         }
         finish()
     }

@@ -35,6 +35,8 @@ class RemoveNoteOperation: AsyncOperation {
             result = true
         case .failure:
             result = false
+        case .noData:
+            print()
         }
         finish()
     }

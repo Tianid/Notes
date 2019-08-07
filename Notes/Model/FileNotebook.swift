@@ -67,7 +67,7 @@ class FileNotebook {
                 let data = try Data(contentsOf: dirUrl!)
                 let serializableData = try JSONSerialization.jsonObject(with: data, options: []) as! [[String : Any]]
                 for dictionary in serializableData {
-//                    print(dictionary)
+                    print(dictionary)
                     if let note = Note.parse(json: dictionary) {
                         self.add(note)
                     }
