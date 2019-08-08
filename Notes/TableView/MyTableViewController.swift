@@ -4,6 +4,7 @@ class MyTableViewController: UIViewController {
 
     let reusableCell = "reusableCell"
     var fileNoteBook: FileNotebook?
+    var networkNoteBook: NetworkNoteBook?
     var notes = [Note]()
     var noteIndex: Int?
     
@@ -20,12 +21,13 @@ class MyTableViewController: UIViewController {
         myTableView.delegate = self
         myTableView.dataSource = self
         fileNoteBook = FileNotebook()
+        networkNoteBook = NetworkNoteBook()
         notes = (fileNoteBook?.getArrayOfNotes())!
         let backendQueue = OperationQueue()
         let dbQueue = OperationQueue()
         let commonQueu = OperationQueue()
         
-        let loadNotesOperation = LoadNotesOperation(notebook: fileNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
+        let loadNotesOperation = LoadNotesOperation(notebook: fileNoteBook!, networkNoteBook: networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
         loadNotesOperation.completionBlock = { [unowned self] in
             DispatchQueue.main.async {
                 
@@ -88,11 +90,13 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
         if segue.identifier == "toEditScreenWithData" {
             if let destination = segue.destination as? ViewController{
                 destination.fileNoteBook = fileNoteBook
+                destination.networkNoteBook = networkNoteBook
                 destination.note = self.notes[noteIndex!]
             }
         } else {
             if segue.identifier == "toEditScreen" {
                 if let destination = segue.destination as? ViewController{
+                    destination.networkNoteBook = networkNoteBook
                     destination.fileNoteBook = fileNoteBook
                 }
             }
@@ -112,20 +116,24 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
         if editingStyle == .delete {
-            myTableView.beginUpdates()
-            let temp = notes[indexPath.row]
-            notes.remove(at: indexPath.row)
-
             let backendQueue = OperationQueue()
             let dbQueue = OperationQueue()
             let commonQueue = OperationQueue()
-            let removeNoteOperation = RemoveNoteOperation(note: temp, notebook: fileNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
+            
+            
+            myTableView.beginUpdates()
+            
+            let tempNote = notes[indexPath.row]
+            self.notes.remove(at: indexPath.row)
+            self.myTableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            self.myTableView.endUpdates()
+
+            
+            let removeNoteOperation = RemoveNoteOperation(note: tempNote, notebook: fileNoteBook!, networkNoteBook: networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
             
             removeNoteOperation.completionBlock = {
-                DispatchQueue.main.async {
-                    self.myTableView.deleteRows(at: [indexPath], with: .automatic)
-                    self.myTableView.endUpdates()
-                }
+                print("Note was DELETED")
             }
             commonQueue.addOperation(removeNoteOperation)
         }

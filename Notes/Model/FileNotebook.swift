@@ -66,6 +66,7 @@ class FileNotebook {
             do {
                 let data = try Data(contentsOf: dirUrl!)
                 let serializableData = try JSONSerialization.jsonObject(with: data, options: []) as! [[String : Any]]
+                print("LOADED FROM LOCAL STORAGE")
                 for dictionary in serializableData {
                     print(dictionary)
                     if let note = Note.parse(json: dictionary) {

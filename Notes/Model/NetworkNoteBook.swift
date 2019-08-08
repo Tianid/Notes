@@ -1,14 +1,24 @@
 import Foundation
 import UIKit
 
+
+
  class NetworkNoteBook {
+    fileprivate var GIST_ID: String?
+    fileprivate let client_id = "client_id"
+    fileprivate let client_secret = "client_secret"
+    //    fileprivate let token = "super_duper_secret_token"
+    fileprivate let token = "token"
     
-//    fileprivate let token = "super_duper_secret_token"
-    fileprivate let token = "7a198e118b08bfd8e5e0b06e795ff6ba561d4fea"
+    fileprivate let authorizeURL = "https://github.com/login/oauth/authorize";
+    fileprivate let tokenURL = "https://github.com/login/oauth/access_token";
+    fileprivate let apiURLBase = "https://api.github.com/"
+    fileprivate let gistsURL = "https://api.github.com/gists"
+    
+    
     
     var notes: [Note]?
     var result: String?
-    var id: String?
     
     struct Gist: Codable {
         let files: [String: GistFile]
@@ -28,7 +38,7 @@ import UIKit
     func getContentFromGist(completionHandler: @escaping () -> Void) {
         // First URLSession allow get raw_url
         var rawUrl: String?
-        let component = URLComponents(string: "https://api.github.com/gists")
+        let component = URLComponents(string: self.gistsURL)
         let url = component?.url
         
         var urlRequest = URLRequest(url: url!)
@@ -42,14 +52,16 @@ import UIKit
                 completionHandler()
                 return
             }
+            
             for gist in gists {
                 if let file = gist.files["ios-course-notes-db"]{
                     rawUrl = file.rawUrl
+                    self.GIST_ID = gist.id
                 }
             }
             
             // Second URLSession allow get data from gist by raw_url
-            guard rawUrl != nil else {self.result = "network error or ios-course-notes-db not exist"; print(self.result!); completionHandler(); return }
+            guard rawUrl != nil else {self.result = "network error or ios-course-notes-db not exist"; self.GIST_ID = nil; print(self.result!); completionHandler(); return }
             let component = URLComponents(string: rawUrl!)
             let url = component?.url
             
@@ -67,7 +79,7 @@ import UIKit
                         self.notes?.append(Note.parse(json: item)!)
                     }
 
-                    print("ios-course-notes-db was LOADED")
+                    print("ios-course-notes-db was LOADED from backend")
                     print(self.notes!)
                     self.result = "sucsses"
                     completionHandler()
@@ -86,92 +98,76 @@ import UIKit
     func setContentForGist(notes: [Note], completionHandler: @escaping () -> Void) {
         // Update/create GitHub Gist file
         self.notes = notes
-        let component = URLComponents(string: "https://api.github.com/gists")
-        let url = component?.url
-        
-        var urlRequest = URLRequest(url: url!)
-        urlRequest.setValue("token \(token)", forHTTPHeaderField: "Authorization")
-        URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            guard error == nil else { self.result = "No data"; completionHandler(); return }
-            guard let data = data else { self.result = "No data"; completionHandler(); return }
-            guard let gists = try? JSONDecoder().decode([Gist].self, from: data) else {
-                print("Parsing error")
-                self.result = "parsing error"
-                completionHandler()
-                return
-            }
-//            print(gists)
-            for gist in gists {
-                if gist.files["ios-course-notes-db"] != nil{
-                    self.id = gist.id
-                }
+        if self.GIST_ID != nil {
+            // if file exist - update it
+            var result = [[String: Any]]()
+            for value in self.notes! {
+                result.append(value.json)
             }
             
-            print(self.id)
-                
-            if self.id != nil {
-                print("if self.id != nil ")
-
-                // if file exist - update it
-                var result = [[String: Any]]()
-                for value in self.notes! {
-                    result.append(value.json)
-                }
-                
-                let component = URLComponents(string: "https://api.github.com/gists/\(self.id!)")
-                let url = component?.url
-                var request = URLRequest(url: url!)
-                request.httpMethod = "PATCH"
-                request.setValue("token \(self.token)", forHTTPHeaderField: "Authorization")
-                let jsonData = try! JSONSerialization.data(withJSONObject: result, options: [])
-                request.httpBody = try! JSONSerialization.data(withJSONObject: ["description": "Notes", "files":["ios-course-notes-db":["content": String(data: jsonData, encoding: .utf8)!, "filename":"ios-course-notes-db"]]])
-                
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    if let response = response as? HTTPURLResponse {
-                        switch response.statusCode {
-                        case 200..<300:
-                            print("ios-course-notes-db was UPDATED")
-                            self.result = "sucsses"
-                            completionHandler()
-                        default:
-                            print("Status: \(response.statusCode)")
-                            self.result = "failure"
-                            completionHandler()
-                            
-                        }
+            let component = URLComponents(string: "\(self.gistsURL)/\(self.GIST_ID!)")
+            let url = component?.url
+            var request = URLRequest(url: url!)
+            request.httpMethod = "PATCH"
+            request.setValue("token \(self.token)", forHTTPHeaderField: "Authorization")
+            let jsonData = try! JSONSerialization.data(withJSONObject: result, options: [])
+            request.httpBody = try! JSONSerialization.data(withJSONObject: ["description": "Notes", "files":["ios-course-notes-db":["content": String(data: jsonData, encoding: .utf8)!, "filename":"ios-course-notes-db"]]])
+            
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200..<300:
+                        print("ios-course-notes-db was UPDATED")
+                        self.result = "sucsses"
+                        completionHandler()
+                    default:
+                        print("Status: \(response.statusCode)")
+                        self.result = "failure"
+                        completionHandler()
+                        
                     }
-                }.resume()
-            } else {
-                print("else")
-                // if file not exist - create file
-                var result = [[String: Any]]()
-                for value in self.notes! {
-                    result.append(value.json)
                 }
-             
-                var request = URLRequest(url: url!)
-                request.httpMethod = "POST"
-                request.setValue("token \(self.token)", forHTTPHeaderField: "Authorization")
-                let jsonData = try! JSONSerialization.data(withJSONObject: result, options: [])
-                
-                request.httpBody = try! JSONSerialization.data(withJSONObject: ["description": "Notes", "public":true, "files":["ios-course-notes-db":["content": String(data: jsonData, encoding: .utf8)!]]])
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    if let response = response as? HTTPURLResponse {
-                        switch response.statusCode {
-                        case 200..<300:
-                            print("ios-course-notes-db was CREATED")
-                            self.result = "sucsses"
-                            completionHandler()
-                        default:
-                            print("Status: \(response.statusCode)")
-                            self.result = "failure"
-                            completionHandler()
-                        }
-                    }
-                }.resume()
-                //completionHandler()
+            }.resume()
+        } else {
+            // if file not exist - create file
+            var result = [[String: Any]]()
+            for value in self.notes! {
+                result.append(value.json)
             }
-        }.resume()
+            let component = URLComponents(string: "\(self.gistsURL)")
+            let url = component?.url
+            var request = URLRequest(url: url!)
+            request.httpMethod = "POST"
+            request.setValue("token \(self.token)", forHTTPHeaderField: "Authorization")
+            let jsonData = try! JSONSerialization.data(withJSONObject: result, options: [])
+            
+            request.httpBody = try! JSONSerialization.data(withJSONObject: ["description": "Notes", "public":true, "files":["ios-course-notes-db":["content": String(data: jsonData, encoding: .utf8)!]]])
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+        
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200..<300:
+                        guard let data = data else { print("shit ^;("); return }
+                        do {
+                            let gist = try JSONDecoder().decode(Gist.self, from: data)
+                            self.GIST_ID = gist.id
+                            print(self.GIST_ID, "ID FROM CREATING REQUEST")
+
+                        } catch {
+                            print(error)
+                        }
+                        print("ios-course-notes-db was CREATED")
+                        self.result = "sucsses"
+                        completionHandler()
+                    default:
+                        print("Status: \(response.statusCode)")
+                        self.result = "failure"
+                        completionHandler()
+                    }
+                }
+            }.resume()
+            //completionHandler()
+        }
     }
 }
 

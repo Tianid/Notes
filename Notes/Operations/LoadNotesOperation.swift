@@ -4,19 +4,22 @@ class LoadNotesOperation: AsyncOperation {
     private let notebook: FileNotebook
     private let loadFromDB: LoadNotesDBOperation
     private var loadFromBackend: LoadNotesBackendOperation?
+    private let networkNoteBook: NetworkNoteBook
 //    var fromLocalDBNotes: [String:Note]?
     
     private(set) var result: String?
 
     init(
          notebook: FileNotebook,
+         networkNoteBook: NetworkNoteBook,
          backendQueue: OperationQueue,
          dbQueue: OperationQueue) {
 
         self.notebook = notebook
+        self.networkNoteBook = networkNoteBook
 //        self.fromLocalDBNotes = [String:Note]()
         loadFromDB = LoadNotesDBOperation(notebook: notebook)
-        loadFromBackend = LoadNotesBackendOperation(noteBook: notebook)
+        loadFromBackend = LoadNotesBackendOperation(noteBook: notebook, networkNoteBook: networkNoteBook)
         
         super.init()
         
@@ -33,7 +36,7 @@ class LoadNotesOperation: AsyncOperation {
     override func main() {
         switch loadFromBackend!.result! {
         case .success:
-            notebook.saveDataFromArrayToDictionary(notes: (loadFromBackend?.networkNoteBook.notes)!, cleanFlag: true)
+            notebook.saveDataFromArrayToDictionary(notes: (self.networkNoteBook.notes)!, cleanFlag: true)
             result = "sucsses"
            
         case .failure:

@@ -2,6 +2,7 @@ import Foundation
 
 class RemoveNoteOperation: AsyncOperation {
     private let notebook: FileNotebook
+    private let networkNotebook: NetworkNoteBook
     private let removeFromeDb: RemoveNotesDBOperation
     private var saveToBackend: SaveNotesBackendOperation?
     
@@ -10,12 +11,14 @@ class RemoveNoteOperation: AsyncOperation {
     init(
         note: Note,
         notebook: FileNotebook,
+        networkNoteBook: NetworkNoteBook,
         backendQueue: OperationQueue,
         dbQueue: OperationQueue) {
         
         self.notebook = notebook
+        self.networkNotebook = networkNoteBook
         removeFromeDb = RemoveNotesDBOperation(note: note, notebook: notebook)
-        saveToBackend = SaveNotesBackendOperation(noteBook: notebook)
+        saveToBackend = SaveNotesBackendOperation(noteBook: notebook, networkNoteBook: networkNoteBook)
         
         super.init()
         
@@ -36,7 +39,7 @@ class RemoveNoteOperation: AsyncOperation {
         case .failure:
             result = false
         case .noData:
-            print()
+            result = false
         }
         finish()
     }
