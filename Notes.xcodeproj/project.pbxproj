@@ -40,6 +40,7 @@
 		12E738C122EF3AB6002DF6B8 /* RemoveNotesDBOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E738C022EF3AB6002DF6B8 /* RemoveNotesDBOperation.swift */; };
 		12E738C322EF5E23002DF6B8 /* LoadNotesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E738C222EF5E23002DF6B8 /* LoadNotesOperation.swift */; };
 		12E738C522EF7FFB002DF6B8 /* RemoveNoteOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E738C422EF7FFB002DF6B8 /* RemoveNoteOperation.swift */; };
+		12EB744E22FDA8C000984613 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EB744D22FDA8C000984613 /* AuthViewController.swift */; };
 		926C20E4E8A09A89D81BF1F7 /* libPods-NotesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D8AB0C9C2F5E7C37D82CA89 /* libPods-NotesTests.a */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +92,7 @@
 		12E738C022EF3AB6002DF6B8 /* RemoveNotesDBOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNotesDBOperation.swift; sourceTree = "<group>"; };
 		12E738C222EF5E23002DF6B8 /* LoadNotesOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNotesOperation.swift; sourceTree = "<group>"; };
 		12E738C422EF7FFB002DF6B8 /* RemoveNoteOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNoteOperation.swift; sourceTree = "<group>"; };
+		12EB744D22FDA8C000984613 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		2D8AB0C9C2F5E7C37D82CA89 /* libPods-NotesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NotesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBF4464F316ED336E57C76C /* Pods-Notes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.debug.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.debug.xcconfig"; sourceTree = "<group>"; };
 		5747EB698B05B29FF8BE3A1E /* Pods-Notes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.release.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.release.xcconfig"; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				12ABCE2922DBBBA600AF1214 /* MyTableViewController.swift */,
 				12ABCE2B22DBC46E00AF1214 /* MyTableViewCell.swift */,
 				12ABCE2C22DBC46E00AF1214 /* MyTableViewCell.xib */,
+				12EB744D22FDA8C000984613 /* AuthViewController.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				122483B722C6A9F900B402FA /* Note.swift in Sources */,
 				128F6D6B22CE93E600FD3F86 /* BoxFlag.swift in Sources */,
 				12E738BF22EF3852002DF6B8 /* LoadNotesDBOperation.swift in Sources */,
+				12EB744E22FDA8C000984613 /* AuthViewController.swift in Sources */,
 				12E738C122EF3AB6002DF6B8 /* RemoveNotesDBOperation.swift in Sources */,
 				12A2CCCD22DE271C00F7EB06 /* GalleryCollectionViewCell.swift in Sources */,
 				12D79A0722D51495007384B6 /* CursorView.swift in Sources */,

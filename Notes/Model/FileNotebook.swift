@@ -50,7 +50,7 @@ class FileNotebook {
         let filename = dirUrl?.appendingPathComponent("Notes")
         do {
             let data = try JSONSerialization.data(withJSONObject: result, options: [])
-            print(FileManager.default.createFile(atPath: filename!.path, contents: data, attributes: nil) , " - result of creating")
+            print(FileManager.default.createFile(atPath: filename!.path, contents: data, attributes: nil) , " - RESULT OF CREATING LOCAL FILE")
             print("absolute savepath - ",filename?.absoluteURL as Any)
         } catch {}
     }

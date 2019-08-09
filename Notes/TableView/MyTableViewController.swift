@@ -23,29 +23,48 @@ class MyTableViewController: UIViewController {
         fileNoteBook = FileNotebook()
         networkNoteBook = NetworkNoteBook()
         notes = (fileNoteBook?.getArrayOfNotes())!
-        let backendQueue = OperationQueue()
-        let dbQueue = OperationQueue()
-        let commonQueu = OperationQueue()
-        
-        let loadNotesOperation = LoadNotesOperation(notebook: fileNoteBook!, networkNoteBook: networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
-        loadNotesOperation.completionBlock = { [unowned self] in
-            DispatchQueue.main.async {
-                
-                if loadNotesOperation.result == "sucsses" || loadNotesOperation.result == "emptyFile" {
-                    // Data from GitHub Gists, if gist is empty then  tableview will be empty too
-                    self.notes = (self.fileNoteBook?.getArrayOfNotes())!
-                    self.myTableView.reloadData()
-                } else {
+        authoriseOnGitHub()
+//        myTableView.isEditing = true
+    }
+    private func authoriseOnGitHub() {
+        guard !(self.networkNoteBook?.token.isEmpty)! else {
+            requestToken()
+            return
+        }
+    }
+    
+    private func requestToken() {
+        let requestTokenViewController = AuthViewController()
+        requestTokenViewController.delegate = self
+        requestTokenViewController.completion = { [unowned self] in
+            
+            let backendQueue = OperationQueue()
+            let dbQueue = OperationQueue()
+            let commonQueu = OperationQueue()
+            
+            
+            let loadNotesOperation = LoadNotesOperation(notebook: self.fileNoteBook!, networkNoteBook: self.networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
+            loadNotesOperation.completionBlock = { [unowned self] in
+                DispatchQueue.main.async {
                     
-                    // Data from local storage
-                    self.notes = (self.fileNoteBook?.getArrayOfNotes())!
-                    self.myTableView.reloadData()
+                    if loadNotesOperation.result == "sucsses" || loadNotesOperation.result == "emptyFile" {
+                        // Data from GitHub Gists, if gist is empty then  tableview will be empty too
+                        self.notes = (self.fileNoteBook?.getArrayOfNotes())!
+                        self.myTableView.reloadData()
+                    } else {
+                        
+                        // Data from local storage
+                        self.notes = (self.fileNoteBook?.getArrayOfNotes())!
+                        self.myTableView.reloadData()
+                    }
                 }
             }
+            commonQueu.addOperation(loadNotesOperation)
+            DispatchQueue.main.async {
+                self.myTableView.register(UINib(nibName: "MyTableViewCell", bundle: nil), forCellReuseIdentifier: self.reusableCell)
+            }
         }
-        commonQueu.addOperation(loadNotesOperation)
-        myTableView.register(UINib(nibName: "MyTableViewCell", bundle: nil), forCellReuseIdentifier: reusableCell)
-//        myTableView.isEditing = true
+        present(requestTokenViewController, animated: false, completion: nil)
     }
 }
 
@@ -65,7 +84,6 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
             cell.noteColor.layer.borderWidth = 1
             cell.selectionStyle = .none
         }
-            
             return cell
     }
     
@@ -75,9 +93,7 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return UITableView.automaticDimension
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -137,6 +153,12 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
             }
             commonQueue.addOperation(removeNoteOperation)
         }
+    }
+}
+
+extension MyTableViewController: AuthViewControllerDelegate {
+    func handleTokenChanged(token: String) {
+        self.networkNoteBook!.token = token
     }
 }
 

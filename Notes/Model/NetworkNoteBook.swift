@@ -5,14 +5,7 @@ import UIKit
 
  class NetworkNoteBook {
     fileprivate var GIST_ID: String?
-    fileprivate let client_id = "client_id"
-    fileprivate let client_secret = "client_secret"
-    //    fileprivate let token = "super_duper_secret_token"
-    fileprivate let token = "token"
-    
-    fileprivate let authorizeURL = "https://github.com/login/oauth/authorize";
-    fileprivate let tokenURL = "https://github.com/login/oauth/access_token";
-    fileprivate let apiURLBase = "https://api.github.com/"
+    var token = ""
     fileprivate let gistsURL = "https://api.github.com/gists"
     
     
@@ -79,7 +72,7 @@ import UIKit
                         self.notes?.append(Note.parse(json: item)!)
                     }
 
-                    print("ios-course-notes-db was LOADED from backend")
+                    print("ios-course-notes-db WAS LOADED FROM BACKEND")
                     print(self.notes!)
                     self.result = "sucsses"
                     completionHandler()
@@ -141,13 +134,13 @@ import UIKit
             request.setValue("token \(self.token)", forHTTPHeaderField: "Authorization")
             let jsonData = try! JSONSerialization.data(withJSONObject: result, options: [])
             
-            request.httpBody = try! JSONSerialization.data(withJSONObject: ["description": "Notes", "public":true, "files":["ios-course-notes-db":["content": String(data: jsonData, encoding: .utf8)!]]])
+            request.httpBody = try! JSONSerialization.data(withJSONObject: ["description": "Notes", "public":false, "files":["ios-course-notes-db":["content": String(data: jsonData, encoding: .utf8)!]]])
             URLSession.shared.dataTask(with: request) { (data, response, error) in
         
                 if let response = response as? HTTPURLResponse {
                     switch response.statusCode {
                     case 200..<300:
-                        guard let data = data else { print("shit ^;("); return }
+                        guard let data = data else { return }
                         do {
                             let gist = try JSONDecoder().decode(Gist.self, from: data)
                             self.GIST_ID = gist.id
