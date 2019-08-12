@@ -27,6 +27,7 @@
 		12B9C1E422F8ACCA00B12260 /* NetworkNoteBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B9C1E322F8ACCA00B12260 /* NetworkNoteBook.swift */; };
 		12C3CD6922D3611E00B6E22C /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C3CD6822D3611E00B6E22C /* ColorPicker.swift */; };
 		12C3CD6B22D36B9000B6E22C /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C3CD6A22D36B9000B6E22C /* ColorPickerViewController.swift */; };
+		12CAEF752301AE690063348C /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 12CAEF732301AE690063348C /* Model.xcdatamodeld */; };
 		12D79A0722D51495007384B6 /* CursorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D79A0622D51495007384B6 /* CursorView.swift */; };
 		12E3ACF622CA36CD006A4921 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12E3ACF522CA36CD006A4921 /* LaunchScreen.storyboard */; };
 		12E738B622EF2DA1002DF6B8 /* SaveNoteDBOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E738AF22EF2DA1002DF6B8 /* SaveNoteDBOperation.swift */; };
@@ -79,6 +80,7 @@
 		12B9C1E322F8ACCA00B12260 /* NetworkNoteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNoteBook.swift; sourceTree = "<group>"; };
 		12C3CD6822D3611E00B6E22C /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		12C3CD6A22D36B9000B6E22C /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
+		12CAEF742301AE690063348C /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		12D79A0622D51495007384B6 /* CursorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorView.swift; sourceTree = "<group>"; };
 		12E3ACF522CA36CD006A4921 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		12E738AF22EF2DA1002DF6B8 /* SaveNoteDBOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveNoteDBOperation.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				12E738C622EF8B22002DF6B8 /* ColorPicker */,
 				12E738C822EF8B87002DF6B8 /* TableView */,
 				12E738C922EF8B9A002DF6B8 /* GalleryView */,
+				12CAEF732301AE690063348C /* Model.xcdatamodeld */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				12E738C122EF3AB6002DF6B8 /* RemoveNotesDBOperation.swift in Sources */,
 				12A2CCCD22DE271C00F7EB06 /* GalleryCollectionViewCell.swift in Sources */,
 				12D79A0722D51495007384B6 /* CursorView.swift in Sources */,
+				12CAEF752301AE690063348C /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,6 +722,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		12CAEF732301AE690063348C /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				12CAEF742301AE690063348C /* Model.xcdatamodel */,
+			);
+			currentVersion = 12CAEF742301AE690063348C /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1224838522C6888900B402FA /* Project object */;
 }

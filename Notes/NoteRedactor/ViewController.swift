@@ -1,4 +1,5 @@
 import UIKit
+import CoreData
 
 class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
 
@@ -18,6 +19,8 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
     var networkNoteBook: NetworkNoteBook?
     var note:Note?
     var colorFromPallet: UIColor?
+    var backgroundContext: NSManagedObjectContext!
+    var backgroundContextAction: String!
     
     
     @IBAction func actionDateSwitcher(_ sender: UISwitch) {
@@ -191,13 +194,15 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
         
         if note == nil {
             let newNote = Note(title: titleTextField.text!, content: textView.text, color: getColorOfSelectedBox()!, importance: .common, selfDestructionDate: destroyDate)
-            let saveNoteOperation = SaveNoteOperation(note: newNote, notebook: fileNoteBook!, networkNoteBook: networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
+            fileNoteBook?.add(newNote)
+            let saveNoteOperation = SaveNoteOperation(note: newNote, notebook: fileNoteBook!, networkNoteBook: networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue, backgroundContext: backgroundContext, backgroundContextAction: backgroundContextAction, noteUIDForUpdating: nil)
             commonQueue.addOperation(saveNoteOperation)
         } else {
             let uid = note?.uid
             fileNoteBook?.remove(with: uid!)
             let newNote = Note(title: titleTextField.text!, content: textView.text, color: getColorOfSelectedBox()!, importance: .common, selfDestructionDate: destroyDate)
-            let saveNoteOperation = SaveNoteOperation(note: newNote, notebook: fileNoteBook!, networkNoteBook: networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
+            fileNoteBook?.add(newNote)
+            let saveNoteOperation = SaveNoteOperation(note: newNote, notebook: fileNoteBook!, networkNoteBook: networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue, backgroundContext: backgroundContext, backgroundContextAction: backgroundContextAction, noteUIDForUpdating: uid)
             commonQueue.addOperation(saveNoteOperation)
         }
         navigationController?.popViewController(animated: true)

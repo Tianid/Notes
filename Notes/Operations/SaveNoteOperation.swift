@@ -1,4 +1,5 @@
 import Foundation
+import CoreData
 
 class SaveNoteOperation: AsyncOperation {
     private let note: Note
@@ -6,6 +7,9 @@ class SaveNoteOperation: AsyncOperation {
     private let networkNoteBook: NetworkNoteBook
     private let saveToDb: SaveNoteDBOperation
     private var saveToBackend: SaveNotesBackendOperation?
+    private var backgroundContext: NSManagedObjectContext!
+    private let backgroundContextAction: String!
+    private var noteUIDForUpdating: String? = nil
     
     private(set) var result: Bool? = false
     
@@ -13,12 +17,18 @@ class SaveNoteOperation: AsyncOperation {
          notebook: FileNotebook,
          networkNoteBook: NetworkNoteBook,
          backendQueue: OperationQueue,
-         dbQueue: OperationQueue) {
+         dbQueue: OperationQueue,
+         backgroundContext: NSManagedObjectContext,
+         backgroundContextAction: String,
+         noteUIDForUpdating: String?) {
         self.note = note
         self.notebook = notebook
         self.networkNoteBook = networkNoteBook
+        self.backgroundContext = backgroundContext
+        self.backgroundContextAction = backgroundContextAction
+        self.noteUIDForUpdating = noteUIDForUpdating
         
-        saveToDb = SaveNoteDBOperation(note: note, notebook: notebook)
+        saveToDb = SaveNoteDBOperation(note: note, notebook: notebook, backgroundContext: backgroundContext, backgroundContextAction: backgroundContextAction, noteUIDForUpdating: noteUIDForUpdating)
         saveToBackend = SaveNotesBackendOperation(noteBook: notebook, networkNoteBook: networkNoteBook)
         
         super.init()

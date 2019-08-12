@@ -1,10 +1,12 @@
 import Foundation
+import CoreData
 
 class LoadNotesOperation: AsyncOperation {
     private let notebook: FileNotebook
     private let loadFromDB: LoadNotesDBOperation
     private var loadFromBackend: LoadNotesBackendOperation?
     private let networkNoteBook: NetworkNoteBook
+    private let backgroundContext: NSManagedObjectContext
 //    var fromLocalDBNotes: [String:Note]?
     
     private(set) var result: String?
@@ -13,12 +15,14 @@ class LoadNotesOperation: AsyncOperation {
          notebook: FileNotebook,
          networkNoteBook: NetworkNoteBook,
          backendQueue: OperationQueue,
-         dbQueue: OperationQueue) {
+         dbQueue: OperationQueue,
+         backgroundContext: NSManagedObjectContext) {
 
         self.notebook = notebook
         self.networkNoteBook = networkNoteBook
+        self.backgroundContext = backgroundContext
 //        self.fromLocalDBNotes = [String:Note]()
-        loadFromDB = LoadNotesDBOperation(notebook: notebook)
+        loadFromDB = LoadNotesDBOperation(notebook: notebook, backgroundContext: backgroundContext)
         loadFromBackend = LoadNotesBackendOperation(noteBook: notebook, networkNoteBook: networkNoteBook)
         
         super.init()

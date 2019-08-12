@@ -144,7 +144,7 @@ import UIKit
                         do {
                             let gist = try JSONDecoder().decode(Gist.self, from: data)
                             self.GIST_ID = gist.id
-                            print(self.GIST_ID, "ID FROM CREATING REQUEST")
+                            print(self.GIST_ID!, "ID FROM CREATING REQUEST")
 
                         } catch {
                             print(error)

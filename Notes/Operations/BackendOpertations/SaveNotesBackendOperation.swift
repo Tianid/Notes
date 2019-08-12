@@ -22,17 +22,20 @@ class SaveNotesBackendOperation: BaseBackendOperation {
     }
     
     override func main() {
-        self.networkNoteBook!.setContentForGist(notes: (noteBook?.getArrayOfNotes())!) { [unowned self] in
-            if self.networkNoteBook!.result == "sucsses" {
-                self.result = .success
-            } else if self.networkNoteBook!.result == "no data" {
-                self.result = .noData
-                print("no data")
-            } else if self.networkNoteBook!.result == "failure" {
-                self.result = .failure(.unreachable)
-                print("failure")
-            }
-            self.finish()
-        }
+        self.result = .failure(.unreachable)
+        self.finish()
+        
+//        self.networkNoteBook!.setContentForGist(notes: (noteBook?.getArrayOfNotes())!) { [unowned self] in
+//            if self.networkNoteBook!.result == "sucsses" {
+//                self.result = .success
+//            } else if self.networkNoteBook!.result == "no data" {
+//                self.result = .noData
+//                print("no data")
+//            } else if self.networkNoteBook!.result == "failure" {
+//                self.result = .failure(.unreachable)
+//                print("failure")
+//            }
+//            self.finish()
+//        }
     }
 }

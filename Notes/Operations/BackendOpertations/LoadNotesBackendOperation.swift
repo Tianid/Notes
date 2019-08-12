@@ -19,18 +19,21 @@ class LoadNotesBackendOperation: BaseBackendOperation {
     }
     
     override func main() {
-        self.networkNoteBook!.getContentFromGist { [unowned self] in
-            if self.networkNoteBook!.notes != nil {
-                self.result = .success
-            } else {
-                if self.networkNoteBook!.result == "empty_file" {
-                    self.result = .emptyFile
-                } else {
-                    self.result = .failure(.unreachable)
-                }
-                
-            }
-            self.finish()
-        }
+        
+        self.result = .failure(.unreachable)
+        self.finish()
+//        self.networkNoteBook!.getContentFromGist { [unowned self] in
+//            if self.networkNoteBook!.notes != nil {
+//                self.result = .success
+//            } else {
+//                if self.networkNoteBook!.result == "empty_file" {
+//                    self.result = .emptyFile
+//                } else {
+//                    self.result = .failure(.unreachable)
+//                }
+//
+//            }
+//            self.finish()
+//        }
     }
 }

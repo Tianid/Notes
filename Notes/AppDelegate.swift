@@ -1,14 +1,51 @@
 
 import UIKit
 import CocoaLumberjack
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var container: NSPersistentContainer!
 
+    
+    func createContainer(completion: @escaping (NSPersistentContainer) -> ()) {
+        let container = NSPersistentContainer(name: "Model")
+        container.loadPersistentStores(completionHandler: { _, error in
+            guard error == nil else { fatalError("Failed to load store") }
+            DispatchQueue.main.async {
+                completion(container)
+            }
+        })
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        createContainer { (container) in
+            self.container = container
+            let arrayOfVC = (self.window?.rootViewController as? UITabBarController)?.viewControllers
+            let nc = arrayOfVC![0] as? UINavigationController
+            let vc = nc?.topViewController as? MyTableViewController
+            vc?.backgroundContext = container.newBackgroundContext()
+            vc?.context = container.viewContext
+            
+            
+//            if let tbc = self.window?.rootViewController as? UITabBarController, let nc = tbc.navigationController as? UINavigationController, let vc = nc.topViewController as? MyTableViewController {
+//
+//                print("sucsses")
+//                print()
+//            }
+//
+//            if let nc = self.window?.rootViewController as? UINavigationController, let vc = nc.topViewController as? MyTableViewController {
+//                vc.context = container.viewContext
+//                vc.backgroundContext = container.newBackgroundContext()
+//            } else {
+//                print("NO")
+//            }
+        }
+        
+        
         // Override point for customization after application launch.
         return true
     }
