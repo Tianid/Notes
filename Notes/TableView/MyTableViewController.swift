@@ -113,7 +113,6 @@ class MyTableViewController: UIViewController {
 
 extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return notes.count
     }
     
@@ -188,13 +187,14 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
             myTableView.beginUpdates()
             
             let tempNote = notes[indexPath.row]
-            self.notes.remove(at: indexPath.row)
-            self.myTableView.deleteRows(at: [indexPath], with: .automatic)
+            notes.remove(at: indexPath.row)
+            fileNoteBook?.remove(with: tempNote.uid)
+            myTableView.deleteRows(at: [indexPath], with: .automatic)
             
-            self.myTableView.endUpdates()
+            myTableView.endUpdates()
 
             
-            let removeNoteOperation = RemoveNoteOperation(note: tempNote, notebook: fileNoteBook!, networkNoteBook: networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
+            let removeNoteOperation = RemoveNoteOperation(note: tempNote, notebook: fileNoteBook!, networkNoteBook: networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue, backgroundContext: backgroundContext)
             
             removeNoteOperation.completionBlock = {
                 print("Note was DELETED")

@@ -1,10 +1,12 @@
 import Foundation
+import CoreData
 
 class RemoveNoteOperation: AsyncOperation {
     private let notebook: FileNotebook
     private let networkNotebook: NetworkNoteBook
     private let removeFromeDb: RemoveNotesDBOperation
     private var saveToBackend: SaveNotesBackendOperation?
+    private let backgroundContext: NSManagedObjectContext!
     
     private(set) var result: Bool? = false
     
@@ -13,11 +15,14 @@ class RemoveNoteOperation: AsyncOperation {
         notebook: FileNotebook,
         networkNoteBook: NetworkNoteBook,
         backendQueue: OperationQueue,
-        dbQueue: OperationQueue) {
+        dbQueue: OperationQueue,
+        backgroundContext: NSManagedObjectContext) {
         
         self.notebook = notebook
         self.networkNotebook = networkNoteBook
-        removeFromeDb = RemoveNotesDBOperation(note: note, notebook: notebook)
+        self.backgroundContext = backgroundContext
+        
+        removeFromeDb = RemoveNotesDBOperation(note: note, notebook: notebook, backgroundContext: backgroundContext)
         saveToBackend = SaveNotesBackendOperation(noteBook: notebook, networkNoteBook: networkNoteBook)
         
         super.init()

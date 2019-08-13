@@ -78,6 +78,7 @@
 		12ABCE2B22DBC46E00AF1214 /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		12ABCE2C22DBC46E00AF1214 /* MyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyTableViewCell.xib; sourceTree = "<group>"; };
 		12B9C1E322F8ACCA00B12260 /* NetworkNoteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNoteBook.swift; sourceTree = "<group>"; };
+		12C1E365230321B900A9258D /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
 		12C3CD6822D3611E00B6E22C /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		12C3CD6A22D36B9000B6E22C /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		12CAEF742301AE690063348C /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -727,6 +728,7 @@
 		12CAEF732301AE690063348C /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				12C1E365230321B900A9258D /* Model 2.xcdatamodel */,
 				12CAEF742301AE690063348C /* Model.xcdatamodel */,
 			);
 			currentVersion = 12CAEF742301AE690063348C /* Model.xcdatamodel */;
