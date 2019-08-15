@@ -28,7 +28,7 @@ class LoadNotesDBOperation: BaseDBOperation {
                     let selfDestructionDate = data.value(forKey: "selfDestructionDate") as! Date?
                     let color: UIColor
                     
-                    if red == 1 ,green == 1, blue == 1, alpha == 1 {
+                    if red == 1, green == 1, blue == 1, alpha == 1 {
                         color = .white
                     } else {
                         color = UIColor.init(red: red, green: green, blue: blue, alpha: alpha)

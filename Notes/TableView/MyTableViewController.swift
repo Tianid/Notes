@@ -5,7 +5,7 @@ class MyTableViewController: UIViewController {
     
     var backgroundContext: NSManagedObjectContext! {
         didSet {
-            fetchData()
+            authoriseOnGitHub()
         }
     }
     var context: NSManagedObjectContext! 
@@ -31,84 +31,49 @@ class MyTableViewController: UIViewController {
         fileNoteBook = FileNotebook()
         networkNoteBook = NetworkNoteBook()
         notes = (fileNoteBook?.getArrayOfNotes())!
-        
-        
-        
-        
 //        authoriseOnGitHub()
 //        myTableView.isEditing = true
     }
     
-    
-    func fetchData() {
-        let backendQueue = OperationQueue()
-        let dbQueue = OperationQueue()
-        let commonQueu = OperationQueue()
-        
-        
-        let loadNotesOperation = LoadNotesOperation(notebook: self.fileNoteBook!, networkNoteBook: self.networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue, backgroundContext: backgroundContext)
-        loadNotesOperation.completionBlock = { [unowned self] in
-            DispatchQueue.main.async {
-                
-                if loadNotesOperation.result == "sucsses" || loadNotesOperation.result == "emptyFile" {
-                    // Data from GitHub Gists, if gist is empty then  tableview will be empty too
-                    self.notes = (self.fileNoteBook?.getArrayOfNotes())!
-                    self.myTableView.reloadData()
-                } else {
+    private func authoriseOnGitHub() {
+        guard !(self.networkNoteBook?.token.isEmpty)! else {
+            requestToken()
+            return
+        }
+    }
+
+    private func requestToken() {
+        let requestTokenViewController = AuthViewController()
+        requestTokenViewController.delegate = self
+        requestTokenViewController.completion = { [unowned self] in
+
+            let backendQueue = OperationQueue()
+            let dbQueue = OperationQueue()
+            let commonQueu = OperationQueue()
+
+
+            let loadNotesOperation = LoadNotesOperation(notebook: self.fileNoteBook!, networkNoteBook: self.networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue, backgroundContext: self.backgroundContext)
+            loadNotesOperation.completionBlock = { [unowned self] in
+                DispatchQueue.main.async {
                     
-                    // Data from local storage
-                    self.notes = (self.fileNoteBook?.getArrayOfNotes())!
-                    self.myTableView.reloadData()
+                    //MARK: made specifically to process errors in the future
+                    switch loadNotesOperation.result {
+                    case .some(.success),.some(.emptyFile):
+                        self.notes = (self.fileNoteBook?.getArrayOfNotes())!
+                        self.myTableView.reloadData()
+                    case .some(.failure),.some(.noData),.some(.noGistOrNoNetworkConnection),.none:
+                        self.notes = (self.fileNoteBook?.getArrayOfNotes())!
+                        self.myTableView.reloadData()
+                    }
                 }
             }
+            commonQueu.addOperation(loadNotesOperation)
+            DispatchQueue.main.async {
+                self.myTableView.register(UINib(nibName: "MyTableViewCell", bundle: nil), forCellReuseIdentifier: self.reusableCell)
+            }
         }
-        commonQueu.addOperation(loadNotesOperation)
-        self.myTableView.register(UINib(nibName: "MyTableViewCell", bundle: nil), forCellReuseIdentifier: self.reusableCell)
+        present(requestTokenViewController, animated: false, completion: nil)
     }
-    
-    
-    
-    
-//    private func authoriseOnGitHub() {
-//        guard !(self.networkNoteBook?.token.isEmpty)! else {
-//            requestToken()
-//            return
-//        }
-//    }
-//
-//    private func requestToken() {
-//        let requestTokenViewController = AuthViewController()
-//        requestTokenViewController.delegate = self
-//        requestTokenViewController.completion = { [unowned self] in
-//
-//            let backendQueue = OperationQueue()
-//            let dbQueue = OperationQueue()
-//            let commonQueu = OperationQueue()
-//
-//
-//            let loadNotesOperation = LoadNotesOperation(notebook: self.fileNoteBook!, networkNoteBook: self.networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue)
-//            loadNotesOperation.completionBlock = { [unowned self] in
-//                DispatchQueue.main.async {
-//
-//                    if loadNotesOperation.result == "sucsses" || loadNotesOperation.result == "emptyFile" {
-//                        // Data from GitHub Gists, if gist is empty then  tableview will be empty too
-//                        self.notes = (self.fileNoteBook?.getArrayOfNotes())!
-//                        self.myTableView.reloadData()
-//                    } else {
-//
-//                        // Data from local storage
-//                        self.notes = (self.fileNoteBook?.getArrayOfNotes())!
-//                        self.myTableView.reloadData()
-//                    }
-//                }
-//            }
-//            commonQueu.addOperation(loadNotesOperation)
-//            DispatchQueue.main.async {
-//                self.myTableView.register(UINib(nibName: "MyTableViewCell", bundle: nil), forCellReuseIdentifier: self.reusableCell)
-//            }
-//        }
-//        present(requestTokenViewController, animated: false, completion: nil)
-//    }
 }
 
 extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
@@ -151,7 +116,7 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
                 destination.networkNoteBook = networkNoteBook
                 destination.note = self.notes[noteIndex!]
                 destination.backgroundContext = self.backgroundContext
-                destination.backgroundContextAction = "Update"
+                destination.backgroundContextAction = .Update
             }
         } else {
             if segue.identifier == "toEditScreen" {
@@ -159,7 +124,7 @@ extension MyTableViewController: UITableViewDelegate, UITableViewDataSource {
                     destination.networkNoteBook = networkNoteBook
                     destination.fileNoteBook = fileNoteBook
                     destination.backgroundContext = self.backgroundContext
-                    destination.backgroundContextAction = "Create"
+                    destination.backgroundContextAction = .Create
 
                 }
             }

@@ -9,23 +9,16 @@ protocol AuthViewControllerDelegate: class {
 final class AuthViewController: UIViewController {
 
     weak var delegate: AuthViewControllerDelegate?
-    
     private let webView = WKWebView()
-    private let clientId = "clientId" // здесь должен быть client_id вашего зарегистрированного приложения
-    private let client_secret = "client_secret" // здесь должен быть client_secret вашего зарегистрированного приложения
-    private let sheme = "login" // здесь должен быть callback URL вашего зарегистрированнаого приложения (пример: при регистрации я указал его как login://host, поэтому в поле sheme указываем: let sheme = "login")
     private var authCode = ""
-    
     var completion: (() -> ())?
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        var urlComponents = URLComponents(string: "https://github.com/login/oauth/authorize")
+        var urlComponents = URLComponents(string: OAUTH_AUTHORIZE_URL_CONST)
         urlComponents?.queryItems = [
-            URLQueryItem(name: "client_id", value: "\(clientId)"),
+            URLQueryItem(name: "client_id", value: "\(CLIENT_ID_CONST)"),
             URLQueryItem(name: "scope", value: "gist")
         ]
         let request = URLRequest(url: urlComponents!.url!)
@@ -47,11 +40,11 @@ final class AuthViewController: UIViewController {
     }
     
     private var tokenGetRequest: URLRequest? {
-        guard var urlComponents = URLComponents(string: "https://github.com/login/oauth/access_token") else { return nil }
+        guard var urlComponents = URLComponents(string: OAUTH_ACCESS_TOKEN_URL_CONST) else { return nil }
         
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "\(clientId)"),
-            URLQueryItem(name: "client_secret", value: "\(client_secret)"),
+            URLQueryItem(name: "client_id", value: "\(CLIENT_ID_CONST)"),
+            URLQueryItem(name: "client_secret", value: "\(CLIENT_SECRET_CONST)"),
             URLQueryItem(name: "code", value: "\(authCode)")
         ]
         
@@ -67,7 +60,7 @@ final class AuthViewController: UIViewController {
 extension AuthViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let url = navigationAction.request.url, url.scheme == self.sheme {
+        if let url = navigationAction.request.url, url.scheme == SCHEME_CONST {
             let targetString = url.absoluteString.replacingOccurrences(of: "#", with: "?")
             guard let components = URLComponents(string: targetString) else { return }
             

@@ -1,13 +1,7 @@
 import Foundation
 
-enum LoadNotesBackendResult {
-    case success
-    case failure(NetworkError)
-    case emptyFile
-}
-
 class LoadNotesBackendOperation: BaseBackendOperation {
-    var result: LoadNotesBackendResult?
+    var result: NotesBackendResult!
     var noteBook: FileNotebook?
     var notes: [Note]?
     var networkNoteBook: NetworkNoteBook?
@@ -20,20 +14,28 @@ class LoadNotesBackendOperation: BaseBackendOperation {
     
     override func main() {
         
-        self.result = .failure(.unreachable)
-        self.finish()
-//        self.networkNoteBook!.getContentFromGist { [unowned self] in
-//            if self.networkNoteBook!.notes != nil {
-//                self.result = .success
-//            } else {
-//                if self.networkNoteBook!.result == "empty_file" {
-//                    self.result = .emptyFile
-//                } else {
-//                    self.result = .failure(.unreachable)
-//                }
-//
-//            }
-//            self.finish()
-//        }
+//        self.result = .failure(.unreachable)
+//        self.finish()
+        self.networkNoteBook!.getContentFromGist { [unowned self] in
+            if self.networkNoteBook!.notes != nil {
+                self.result = .success
+            } else {
+                switch self.networkNoteBook?.result {
+                case .some(.emptyFile):
+                    self.result = .emptyFile
+                case .none:
+                    self.result = .failure(.unreachable)
+                case .some(.success):
+                    self.result = .failure(.unreachable)
+                case .some(.failure(_)):
+                    self.result = .failure(.unreachable)
+                case .some(.noData):
+                    self.result = .failure(.unreachable)
+                case .some(.noGistOrNoNetworkConnection):
+                    self.result = .failure(.unreachable)
+                }
+            }
+            self.finish()
+        }
     }
 }

@@ -1,17 +1,11 @@
 import Foundation
 import UIKit
 
-
-
  class NetworkNoteBook {
-    fileprivate var GIST_ID: String?
+    fileprivate var gistId: String?
     var token = ""
-    fileprivate let gistsURL = "https://api.github.com/gists"
-    
-    
-    
     var notes: [Note]?
-    var result: String?
+    var result: NotesBackendResult!
     
     struct Gist: Codable {
         let files: [String: GistFile]
@@ -31,17 +25,17 @@ import UIKit
     func getContentFromGist(completionHandler: @escaping () -> Void) {
         // First URLSession allow get raw_url
         var rawUrl: String?
-        let component = URLComponents(string: self.gistsURL)
+        let component = URLComponents(string: GISTS_URL_CONST)
         let url = component?.url
         
         var urlRequest = URLRequest(url: url!)
         urlRequest.setValue("token \(token)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            guard error == nil else { print(error as Any); self.result = "\(String(describing: error))"; completionHandler(); return}
-            guard let data = data else { self.result = "no data"; completionHandler(); return }
+            guard error == nil else { print(error as Any); self.result = .failure(error as! NetworkError); completionHandler(); return}
+            guard let data = data else { self.result = .failure(error as! NetworkError); completionHandler(); return }
             guard let gists = try? JSONDecoder().decode([Gist].self, from: data) else {
                 print("Parsing error")
-                self.result = "parsing error"
+                self.result = .failure(error as! NetworkError)
                 completionHandler()
                 return
             }
@@ -49,24 +43,23 @@ import UIKit
             for gist in gists {
                 if let file = gist.files["ios-course-notes-db"]{
                     rawUrl = file.rawUrl
-                    self.GIST_ID = gist.id
+                    self.gistId = gist.id
                 }
             }
             
             // Second URLSession allow get data from gist by raw_url
-            guard rawUrl != nil else {self.result = "network error or ios-course-notes-db not exist"; self.GIST_ID = nil; print(self.result!); completionHandler(); return }
+            guard rawUrl != nil else {self.result = .noGistOrNoNetworkConnection; self.gistId = nil; print(self.result as Any); completionHandler(); return }
+
             let component = URLComponents(string: rawUrl!)
             let url = component?.url
             
             var urlRequest = URLRequest(url: url!)
             urlRequest.setValue("token \(self.token)", forHTTPHeaderField: "Authorization")
             URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-                guard error == nil else { print(error as Any); self.result = "\(String(describing: error))" ;completionHandler(); return}
-                guard let data = data else { self.result = "no data"; print("no data"); completionHandler(); return }
-//                print(data)
+                guard error == nil else { print(error as Any); self.result = .failure(error as! NetworkError) ;completionHandler(); return}
+                guard let data = data else { self.result = .failure(error as! NetworkError); print(self.result as Any); completionHandler(); return }
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]]
-//                    print(json)
                     self.notes = []
                     for item in json {
                         self.notes?.append(Note.parse(json: item)!)
@@ -74,12 +67,12 @@ import UIKit
 
                     print("ios-course-notes-db WAS LOADED FROM BACKEND")
                     print(self.notes!)
-                    self.result = "sucsses"
+                    self.result = .success
                     completionHandler()
                     
                 } catch {
                     print(error)
-                    self.result = "empty_file"
+                    self.result = .emptyFile
                     completionHandler()
                 }
 
@@ -91,14 +84,14 @@ import UIKit
     func setContentForGist(notes: [Note], completionHandler: @escaping () -> Void) {
         // Update/create GitHub Gist file
         self.notes = notes
-        if self.GIST_ID != nil {
+        if self.gistId != nil {
             // if file exist - update it
             var result = [[String: Any]]()
             for value in self.notes! {
                 result.append(value.json)
             }
             
-            let component = URLComponents(string: "\(self.gistsURL)/\(self.GIST_ID!)")
+            let component = URLComponents(string: "\(GISTS_URL_CONST)/\(self.gistId!)")
             let url = component?.url
             var request = URLRequest(url: url!)
             request.httpMethod = "PATCH"
@@ -111,11 +104,11 @@ import UIKit
                     switch response.statusCode {
                     case 200..<300:
                         print("ios-course-notes-db was UPDATED")
-                        self.result = "sucsses"
+                        self.result = .success
                         completionHandler()
                     default:
                         print("Status: \(response.statusCode)")
-                        self.result = "failure"
+                        self.result = .failure(error as! NetworkError)
                         completionHandler()
                         
                     }
@@ -127,7 +120,7 @@ import UIKit
             for value in self.notes! {
                 result.append(value.json)
             }
-            let component = URLComponents(string: "\(self.gistsURL)")
+            let component = URLComponents(string: "\(GISTS_URL_CONST)")
             let url = component?.url
             var request = URLRequest(url: url!)
             request.httpMethod = "POST"
@@ -143,18 +136,18 @@ import UIKit
                         guard let data = data else { return }
                         do {
                             let gist = try JSONDecoder().decode(Gist.self, from: data)
-                            self.GIST_ID = gist.id
-                            print(self.GIST_ID!, "ID FROM CREATING REQUEST")
+                            self.gistId = gist.id
+                            print(self.gistId!, "ID FROM CREATING REQUEST")
 
                         } catch {
                             print(error)
                         }
                         print("ios-course-notes-db was CREATED")
-                        self.result = "sucsses"
+                        self.result = .success
                         completionHandler()
                     default:
                         print("Status: \(response.statusCode)")
-                        self.result = "failure"
+                        self.result = .failure(error as! NetworkError)
                         completionHandler()
                     }
                 }

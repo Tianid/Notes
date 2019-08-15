@@ -38,13 +38,19 @@ class RemoveNoteOperation: AsyncOperation {
     }
     
     override func main() {
-        switch saveToBackend!.result! {
-        case .success:
+        switch saveToBackend!.result {
+        case .success?:
             result = true
-        case .failure:
+        case .failure?:
             result = false
-        case .noData:
+        case .noData?:
             result = false
+        case .noGistOrNoNetworkConnection?:
+            result = false
+        case .emptyFile?:
+            result = false
+        case .none: break
+        
         }
         finish()
     }

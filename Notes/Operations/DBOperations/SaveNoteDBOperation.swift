@@ -5,15 +5,15 @@ import UIKit
 class SaveNoteDBOperation: BaseDBOperation {
     private let note: Note
     private let backgroundContext: NSManagedObjectContext!
-    private let backgroundContextAction: String!
-    private var noteUIDForUpdating: String? = nil
+    private let backgroundContextAction: BackgroundContextAction
+    private let noteUIDForUpdating: String?
 
     
     init(note: Note,
          notebook: FileNotebook,
          backgroundContext: NSManagedObjectContext,
-         backgroundContextAction: String,
-         noteUIDForUpdating: String?) {
+         backgroundContextAction: BackgroundContextAction,
+         noteUIDForUpdating: String? = nil) {
         self.note = note
         self.backgroundContext = backgroundContext
         self.backgroundContextAction = backgroundContextAction
@@ -22,15 +22,14 @@ class SaveNoteDBOperation: BaseDBOperation {
     }
     
     override func main() {
-        switch backgroundContextAction {
-        case "Update":
-            updateRecord()
-        case "Create":
-            createRecord()
-        default:
-            break
-        }
         
+        switch backgroundContextAction {
+        case .Create:
+            createRecord()
+        case .Update:
+            updateRecord()
+            
+        }        
 //        notebook.saveToFile()
         finish()
     }

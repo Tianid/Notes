@@ -20,7 +20,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
     var note:Note?
     var colorFromPallet: UIColor?
     var backgroundContext: NSManagedObjectContext!
-    var backgroundContextAction: String!
+    var backgroundContextAction:BackgroundContextAction!
     
     
     @IBAction func actionDateSwitcher(_ sender: UISwitch) {
@@ -195,7 +195,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
         if note == nil {
             let newNote = Note(title: titleTextField.text!, content: textView.text, color: getColorOfSelectedBox()!, importance: .common, selfDestructionDate: destroyDate)
             fileNoteBook?.add(newNote)
-            let saveNoteOperation = SaveNoteOperation(note: newNote, notebook: fileNoteBook!, networkNoteBook: networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue, backgroundContext: backgroundContext, backgroundContextAction: backgroundContextAction, noteUIDForUpdating: nil)
+            let saveNoteOperation = SaveNoteOperation(note: newNote, notebook: fileNoteBook!, networkNoteBook: networkNoteBook!, backendQueue: backendQueue, dbQueue: dbQueue, backgroundContext: backgroundContext, backgroundContextAction: backgroundContextAction)
             commonQueue.addOperation(saveNoteOperation)
         } else {
             let uid = note?.uid

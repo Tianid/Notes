@@ -8,8 +8,8 @@ class SaveNoteOperation: AsyncOperation {
     private let saveToDb: SaveNoteDBOperation
     private var saveToBackend: SaveNotesBackendOperation?
     private var backgroundContext: NSManagedObjectContext!
-    private let backgroundContextAction: String!
-    private var noteUIDForUpdating: String? = nil
+    private let backgroundContextAction: BackgroundContextAction!
+    private let noteUIDForUpdating: String?
     
     private(set) var result: Bool? = false
     
@@ -19,8 +19,8 @@ class SaveNoteOperation: AsyncOperation {
          backendQueue: OperationQueue,
          dbQueue: OperationQueue,
          backgroundContext: NSManagedObjectContext,
-         backgroundContextAction: String,
-         noteUIDForUpdating: String?) {
+         backgroundContextAction: BackgroundContextAction,
+         noteUIDForUpdating: String? = nil) {
         self.note = note
         self.notebook = notebook
         self.networkNoteBook = networkNoteBook
@@ -50,6 +50,10 @@ class SaveNoteOperation: AsyncOperation {
         case .failure:
             result = false
         case .noData:
+            result = false
+        case .noGistOrNoNetworkConnection:
+            result = false
+        case .emptyFile:
             result = false
         }
         finish()

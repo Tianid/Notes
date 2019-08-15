@@ -1,5 +1,6 @@
 import Foundation
 import CoreData
+import UIKit
 
 class LoadNotesOperation: AsyncOperation {
     private let notebook: FileNotebook
@@ -9,7 +10,7 @@ class LoadNotesOperation: AsyncOperation {
     private let backgroundContext: NSManagedObjectContext
 //    var fromLocalDBNotes: [String:Note]?
     
-    private(set) var result: String?
+    private(set) var result: NotesBackendResult!
 
     init(
          notebook: FileNotebook,
@@ -41,25 +42,68 @@ class LoadNotesOperation: AsyncOperation {
         switch loadFromBackend!.result! {
         case .success:
             notebook.saveDataFromArrayToDictionary(notes: (self.networkNoteBook.notes)!, cleanFlag: true)
-            result = "sucsses"
+            refreshCoreData()
+            result = .success
            
         case .failure:
-            result = "failure"
+            result = .failure(.unreachable)
         case .emptyFile:
-            result = "emptyFile"
+            result = .emptyFile
             self.notebook.cleanNotes()
+        case .noData:
+            result = .noData
+        case .noGistOrNoNetworkConnection:
+            result = .noGistOrNoNetworkConnection
+        }
+        finish()
     }
-    finish()
-//    func isEqual() -> Bool{
-//        for valueBackend in loadFromBackend!.notes! {
-//            for valueLocal in fromLocalDBNotes!.keys {
-//                if valueBackend.uid != valueLocal {
-//                    return false
-//                }
-//            }
-//        }
-//        return true
-//    }
+    
+    
+    
+    private func resetCoreData() {
+        
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "NotesEntity")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        do {
+            try backgroundContext.execute(deleteRequest)
+            try backgroundContext.save()
+        }
+        catch {
+            print (error)
+        }
+    }
+    
+    private func setNewObjectsToCoreData() {
+        for item in networkNoteBook.notes! {
+            let notesEntity = NotesEntity(context: self.backgroundContext)
+            
+            var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+            item.color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+            
+            notesEntity.uid = item.uid
+            notesEntity.title = item.title
+            notesEntity.content = item.content
+            notesEntity.red = Double(red)
+            notesEntity.green = Double(green)
+            notesEntity.blue = Double(blue)
+            notesEntity.alpha = Double(alpha)
+            notesEntity.importance = item.importance.rawValue
+            notesEntity.selfDestructionDate = item.selfDestructionDate
+            
+            
+        }
+        self.backgroundContext.performAndWait {
+            do {
+                try self.backgroundContext.save()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    private func refreshCoreData() {
+        resetCoreData()
+        setNewObjectsToCoreData()
     }
 
 }
