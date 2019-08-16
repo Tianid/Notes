@@ -1,10 +1,10 @@
 import Foundation
 
 class LoadNotesBackendOperation: BaseBackendOperation {
-    var result: NotesBackendResult!
-    var noteBook: FileNotebook?
-    var notes: [Note]?
-    var networkNoteBook: NetworkNoteBook?
+    private(set) var result: NotesBackendResult!
+    private var noteBook: FileNotebook?
+    private var notes: [Note]?
+    private var networkNoteBook: NetworkNoteBook?
     
     init(noteBook: FileNotebook, networkNoteBook: NetworkNoteBook) {
         super.init()

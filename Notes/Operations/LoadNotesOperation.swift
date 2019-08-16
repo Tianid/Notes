@@ -8,8 +8,6 @@ class LoadNotesOperation: AsyncOperation {
     private var loadFromBackend: LoadNotesBackendOperation?
     private let networkNoteBook: NetworkNoteBook
     private let backgroundContext: NSManagedObjectContext
-//    var fromLocalDBNotes: [String:Note]?
-    
     private(set) var result: NotesBackendResult!
 
     init(
@@ -22,7 +20,6 @@ class LoadNotesOperation: AsyncOperation {
         self.notebook = notebook
         self.networkNoteBook = networkNoteBook
         self.backgroundContext = backgroundContext
-//        self.fromLocalDBNotes = [String:Note]()
         loadFromDB = LoadNotesDBOperation(notebook: notebook, backgroundContext: backgroundContext)
         loadFromBackend = LoadNotesBackendOperation(noteBook: notebook, networkNoteBook: networkNoteBook)
         
@@ -34,8 +31,6 @@ class LoadNotesOperation: AsyncOperation {
         addDependency(loadFromDB)
         addDependency(loadFromBackend!)
         dbQueue.addOperation(loadFromDB)
-//        fromLocalDBNotes = notebook.notes
-        
     }
     
     override func main() {
@@ -57,8 +52,6 @@ class LoadNotesOperation: AsyncOperation {
         }
         finish()
     }
-    
-    
     
     private func resetCoreData() {
         

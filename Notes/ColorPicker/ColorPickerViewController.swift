@@ -26,7 +26,7 @@ class ColorPickerViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     
-    @objc func onSliderValChanged(slider: UISlider, event: UIEvent) {
+    @objc private func onSliderValChanged(slider: UISlider, event: UIEvent) {
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
         boxColor.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: nil, alpha: nil)

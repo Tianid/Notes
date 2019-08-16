@@ -262,17 +262,17 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MCy-r3-ojP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="ful-qt-rMx">
                     <connections>
-                        <action selector="actionWhiteBoxTapped:" destination="Vec-u0-h34" id="Kcq-pq-7Kz"/>
+                        <action selector="changeShapeOfBoxes:" destination="Vec-u0-h34" id="scz-D5-jLz"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="zL4-73-vCu">
                     <connections>
-                        <action selector="actionRedBoxTapped:" destination="Vec-u0-h34" id="R5t-qu-zrz"/>
+                        <action selector="changeShapeOfBoxes:" destination="Vec-u0-h34" id="9O0-f1-Ggz"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="Iaw-xA-gAz">
                     <connections>
-                        <action selector="actionGreenBoxTapped:" destination="Vec-u0-h34" id="U8S-ch-6Gc"/>
+                        <action selector="changeShapeOfBoxes:" destination="Vec-u0-h34" id="kUO-Mo-9sg"/>
                     </connections>
                 </tapGestureRecognizer>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="ANI-GJ-Ge3">

@@ -7,10 +7,8 @@ class SaveNoteOperation: AsyncOperation {
     private let networkNoteBook: NetworkNoteBook
     private let saveToDb: SaveNoteDBOperation
     private var saveToBackend: SaveNotesBackendOperation?
-    private var backgroundContext: NSManagedObjectContext!
     private let backgroundContextAction: BackgroundContextAction!
     private let noteUIDForUpdating: String?
-    
     private(set) var result: Bool? = false
     
     init(note: Note,
@@ -24,7 +22,6 @@ class SaveNoteOperation: AsyncOperation {
         self.note = note
         self.notebook = notebook
         self.networkNoteBook = networkNoteBook
-        self.backgroundContext = backgroundContext
         self.backgroundContextAction = backgroundContextAction
         self.noteUIDForUpdating = noteUIDForUpdating
         

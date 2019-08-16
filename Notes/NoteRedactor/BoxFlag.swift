@@ -3,8 +3,8 @@ import UIKit
 @IBDesignable
 class BoxFlag: UIView {
     
-    let saturationExponentTop:Float = 2.0
-    let saturationExponentBottom:Float = 1.3
+    private let saturationExponentTop:Float = 2.0
+    private let saturationExponentBottom:Float = 1.3
     
     @IBInspectable var isRainbowBackground: Bool = false
     

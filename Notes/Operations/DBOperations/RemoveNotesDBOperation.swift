@@ -22,7 +22,7 @@ class RemoveNotesDBOperation: BaseDBOperation {
         finish()
     }
     
-    func deleteRecord() {
+    private func deleteRecord() {
         let fetchRequest = NSFetchRequest<NotesEntity>(entityName: "NotesEntity")
         fetchRequest.predicate = NSPredicate(format: "uid = %@", note.uid)
         do {

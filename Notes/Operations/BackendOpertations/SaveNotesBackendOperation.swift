@@ -5,9 +5,9 @@ enum NetworkError {
 }
 
 class SaveNotesBackendOperation: BaseBackendOperation {
-    var result: NotesBackendResult!
-    var noteBook: FileNotebook?
-    var networkNoteBook: NetworkNoteBook?
+    private(set) var result: NotesBackendResult!
+    private var noteBook: FileNotebook?
+    private var networkNoteBook: NetworkNoteBook?
     
     init(noteBook: FileNotebook, networkNoteBook: NetworkNoteBook) {
         super.init()

@@ -10,11 +10,11 @@ class MyTableViewController: UIViewController {
     }
     var context: NSManagedObjectContext! 
 
-    let reusableCell = "reusableCell"
-    var fileNoteBook: FileNotebook?
-    var networkNoteBook: NetworkNoteBook?
-    var notes = [Note]()
-    var noteIndex: Int?
+    private let reusableCell = "reusableCell"
+    private var fileNoteBook: FileNotebook?
+    private var networkNoteBook: NetworkNoteBook?
+    private var notes = [Note]()
+    private var noteIndex: Int?
     
     @IBAction func addButtonTap(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "toEditScreen", sender: nil)

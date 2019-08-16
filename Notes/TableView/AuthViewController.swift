@@ -6,7 +6,7 @@ protocol AuthViewControllerDelegate: class {
     func handleTokenChanged(token: String)
 }
 
-final class AuthViewController: UIViewController {
+ class AuthViewController: UIViewController {
 
     weak var delegate: AuthViewControllerDelegate?
     private let webView = WKWebView()

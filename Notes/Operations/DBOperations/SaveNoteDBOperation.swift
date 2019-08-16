@@ -34,7 +34,7 @@ class SaveNoteDBOperation: BaseDBOperation {
         finish()
     }
     
-    func createRecord() {
+    private func createRecord() {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let `self` = self else { return }
             let notesEntity = NotesEntity(context: self.backgroundContext)
@@ -62,7 +62,7 @@ class SaveNoteDBOperation: BaseDBOperation {
 //        notebook.add(note)
     }
     
-    func updateRecord() {
+    private func updateRecord() {
         
     guard let uid = noteUIDForUpdating else { return }
     let fetchRequest = NSFetchRequest<NotesEntity>.init(entityName: "NotesEntity")

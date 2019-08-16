@@ -1,6 +1,7 @@
 import Foundation
 import CoreData
 import UIKit
+
 class LoadNotesDBOperation: BaseDBOperation {
     private let backgroundContext: NSManagedObjectContext!
 

@@ -10,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var container: NSPersistentContainer!
 
     
-    func createContainer(completion: @escaping (NSPersistentContainer) -> ()) {
+    private func createContainer(completion: @escaping (NSPersistentContainer) -> ()) {
         let container = NSPersistentContainer(name: "Model")
         container.loadPersistentStores(completionHandler: { _, error in
             guard error == nil else { fatalError("Failed to load store") }

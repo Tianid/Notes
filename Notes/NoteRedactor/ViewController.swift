@@ -12,13 +12,13 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
     @IBOutlet weak var dateSwitcher: UISwitch!
     @IBOutlet weak var datePicker: UIDatePicker!
     
-    var colorForColoderBox: UIColor? = nil
-    var boxChar: Character?
-    var destroyDate: Date?
+    private var colorForColoderBox: UIColor? = nil
+    private var boxChar: Character?
+    private var destroyDate: Date?
+    private var colorFromPallet: UIColor?
     var fileNoteBook: FileNotebook?
     var networkNoteBook: NetworkNoteBook?
     var note:Note?
-    var colorFromPallet: UIColor?
     var backgroundContext: NSManagedObjectContext!
     var backgroundContextAction:BackgroundContextAction!
     
@@ -33,33 +33,19 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
     }
     
     
-    @IBAction func actionWhiteBoxTapped(_ sender: Any) {
-        whiteBox.isShapeHiden = !whiteBox.isShapeHiden
-        if !whiteBox.isShapeHiden {
-            redBox.isShapeHiden = true
-            greenBox.isShapeHiden = true
-            coloredBox.isShapeHiden = true
-            coloredBox.isRainbowBackground = true
-        }
-    }
-    
-    @IBAction func actionRedBoxTapped(_ sender: Any) {
-        redBox.isShapeHiden = !redBox.isShapeHiden
-        if !redBox.isShapeHiden {
-            whiteBox.isShapeHiden = true
-            greenBox.isShapeHiden = true
-            coloredBox.isShapeHiden = true
-            coloredBox.isRainbowBackground = true
-        }
-    }
-    
-    @IBAction func actionGreenBoxTapped(_ sender: Any) {
-        greenBox.isShapeHiden = !greenBox.isShapeHiden
-        if !greenBox.isShapeHiden {
-            redBox.isShapeHiden = true
-            whiteBox.isShapeHiden = true
-            coloredBox.isShapeHiden = true
-            coloredBox.isRainbowBackground = true
+    @IBAction func changeShapeOfBoxes(_ sender: UITapGestureRecognizer) {
+        let array = [greenBox,whiteBox,redBox,coloredBox]
+        for item in array {
+            if item == sender.view {
+                item?.isShapeHiden = !item!.isShapeHiden
+                if sender.view == coloredBox {
+                    coloredBox.isRainbowBackground = !coloredBox.isRainbowBackground
+                } else {
+                    coloredBox.isRainbowBackground = true
+                }
+            } else {
+                item?.isShapeHiden = true
+            }
         }
     }
     
@@ -82,6 +68,19 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toColorPicker" {
+            if let destination = segue.destination as? ColorPickerViewController {
+                destination.color = coloredBox.backgroundColor
+            }
+        }
+    }
+    
+    private func setup() {
         if note != nil {
             titleTextField.text = note?.title
             textView.text = note?.content
@@ -106,7 +105,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
             textView.text = ""
             titleTextField.text = ""
         }
-  
+        
         whiteBox.backgroundColor = UIColor.white
         whiteBox.layer.borderWidth = 1
         whiteBox.layer.borderColor = UIColor.gray.cgColor
@@ -141,18 +140,7 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
         self.view.addGestureRecognizer(tapGesture)
         tabBarController?.tabBar.isHidden = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveNote(_:)))
-
-        // Do any additional setup after loading the view, typically from a nib.
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toColorPicker" {
-            if let destination = segue.destination as? ColorPickerViewController {
-                destination.color = coloredBox.backgroundColor
-            }
-        }
-    }
-    
 
     
     private func switchDate() {
@@ -173,12 +161,12 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
         }
     }
     
-    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+    @objc private func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         textView.resignFirstResponder()
         titleTextField.resignFirstResponder()
     }
     
-    @objc func saveNote(_ sender: Any) {
+    @objc private func saveNote(_ sender: Any) {
         titleTextField.text! = titleTextField.text!.trimmingCharacters(in:.whitespacesAndNewlines)
         textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         if titleTextField.text!.isEmpty || textView.text.isEmpty {

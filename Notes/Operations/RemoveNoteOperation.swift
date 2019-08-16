@@ -6,8 +6,6 @@ class RemoveNoteOperation: AsyncOperation {
     private let networkNotebook: NetworkNoteBook
     private let removeFromeDb: RemoveNotesDBOperation
     private var saveToBackend: SaveNotesBackendOperation?
-    private let backgroundContext: NSManagedObjectContext!
-    
     private(set) var result: Bool? = false
     
     init(
@@ -20,7 +18,6 @@ class RemoveNoteOperation: AsyncOperation {
         
         self.notebook = notebook
         self.networkNotebook = networkNoteBook
-        self.backgroundContext = backgroundContext
         
         removeFromeDb = RemoveNotesDBOperation(note: note, notebook: notebook, backgroundContext: backgroundContext)
         saveToBackend = SaveNotesBackendOperation(noteBook: notebook, networkNoteBook: networkNoteBook)
