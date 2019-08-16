@@ -148,19 +148,19 @@
 		1224838F22C6888900B402FA /* Notes */ = {
 			isa = PBXGroup;
 			children = (
-				12E738AD22EF2DA1002DF6B8 /* Operations */,
-				122483B322C6A9F900B402FA /* Model */,
 				1224839022C6888900B402FA /* AppDelegate.swift */,
+				12E4B5C12305BFAC00FC5EC8 /* Constants.swift */,
 				1224839422C6888900B402FA /* Main.storyboard */,
 				12E3ACF522CA36CD006A4921 /* LaunchScreen.storyboard */,
 				1224839722C6888B00B402FA /* Assets.xcassets */,
 				1224839C22C6888B00B402FA /* Info.plist */,
+				12E738AD22EF2DA1002DF6B8 /* Operations */,
+				122483B322C6A9F900B402FA /* Model */,
 				12E738C722EF8B69002DF6B8 /* NoteRedactor */,
 				12E738C622EF8B22002DF6B8 /* ColorPicker */,
 				12E738C822EF8B87002DF6B8 /* TableView */,
 				12E738C922EF8B9A002DF6B8 /* GalleryView */,
 				12CAEF732301AE690063348C /* Model.xcdatamodeld */,
-				12E4B5C12305BFAC00FC5EC8 /* Constants.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
